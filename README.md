@@ -50,12 +50,22 @@ alembic upgrade head                              # apply all migrations
 alembic revision --autogenerate -m "what changed" # after editing a model
 ```
 
+## Load the problem bank
+
+Loads the 278 problems from `backend/data/problem_bank.csv`. Safe to run again (it updates, never duplicates).
+
+```bash
+docker compose exec backend python -m scripts.import_bank   # with Docker
+python -m scripts.import_bank                               # or from the backend folder
+```
+
 ## Try login
 
 1. Open http://localhost:8000/docs.
 2. `POST /auth/register` with `{"email": "you@example.com", "password": "atleast8chars"}`.
 3. `POST /auth/login` with the same body. Copy the `access_token`.
 4. Click **Authorize** (top right), paste the token, then try `GET /auth/me`.
+5. Try `GET /bank` with filters like `pattern=Design`, `company=Amazon`, `difficulty=Easy`, `q=sum`.
 
 Set your own long random `JWT_SECRET` in `.env` before deploying.
 

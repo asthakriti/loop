@@ -43,6 +43,18 @@ alembic upgrade head           # create the tables
 uvicorn app.main:app --reload
 ```
 
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev      # http://localhost:5173 (the backend must be running on :8000)
+npm test         # run the frontend tests
+```
+
+The API address comes from `VITE_API_URL` (see `frontend/.env.example`).
+The backend only accepts browser calls from the addresses in `CORS_ORIGINS` (default `http://localhost:5173`).
+
 ### Database migrations
 
 ```bash
@@ -146,5 +158,10 @@ backend/
   scripts/    CSV import scripts
   alembic/    database migrations
   tests/      pytest tests
-frontend/     React app (later)
+frontend/
+  src/api/         fetch client (adds the JWT token) + one file per resource
+  src/auth/        login state (AuthContext)
+  src/components/  Nav, Layout, ProtectedRoute, ...
+  src/pages/       Login, Today, ...
+  src/theme/       colors and fonts (Tailwind v4 @theme)
 ```

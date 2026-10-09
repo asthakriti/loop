@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+/* Design tokens from PLAN.md section 8. Use them as Tailwind classes,
+   e.g. bg-surface, text-muted, border-border, text-accent, font-heading. */
+@theme {
+  --color-bg: #12141a;
+  --color-dot: #1e222c;
+  --color-surface: #1a1d25;
+  --color-surface-2: #1f232d;
+  --color-border: #242833;
+  --color-border-strong: #2a2e3a;
+  --color-text: #eceef3;
+  --color-muted: #9aa1b2;
+
+  --color-accent: #c6f36b; /* lime: main buttons, logo, progress */
+  --color-lavender: #a99bff; /* XP, level, The Loop */
+  --color-amber: #f5c46b; /* streak, Warm-up, Medium */
+  --color-mint: #7ee0b5; /* covered patterns, Easy */
+  --color-coral: #ff8a80; /* Hard */
+  --color-sky: #7fd3f5; /* "In real life" box */
+  --color-sky-bg: #15202a;
+  --color-sky-border: #1f3340;
+
+  --color-byte-bg: #16141f;
+  --color-byte-border: #2e2a47;
+  --color-byte-code: #0e0d14;
+
+  --font-heading: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radius-card: 20px;
+  --radius-btn: 12px;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: var(--color-bg);
+    /* faint dot grid */
+    background-image: radial-gradient(var(--color-dot) 1px, transparent 1px);
+    background-size: 24px 24px;
+    color: var(--color-text);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-heading);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}

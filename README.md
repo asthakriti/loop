@@ -92,6 +92,7 @@ Or upload the CSV with `POST /my/problems/import` in http://localhost:8000/docs.
 10. Try `GET /me/progress` for XP, level, streak and this week.
 11. Try `GET /badges`. A `done` response lists any badge it just unlocked in `new_badges`.
 12. Try `GET /byte/today`, or `GET /byte/today?type=fact`.
+13. Try `GET /patterns` (15 patterns, covered at 3 solved) and `GET /stats` (round progress and next milestone).
 
 ## XP, levels and streak
 

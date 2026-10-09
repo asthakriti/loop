@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.routers import auth, badges, bank, byte, my_problems, progress, settings, today
+from app.routers import auth, badges, bank, byte, my_problems, patterns, progress, settings, stats, today
 
 app = FastAPI(title="Loop", description="DSA prep app with round robin revision")
 
@@ -12,6 +12,8 @@ app.include_router(settings.router)
 app.include_router(progress.router)
 app.include_router(badges.router)
 app.include_router(byte.router)
+app.include_router(patterns.router)
+app.include_router(stats.router)
 
 
 @app.get("/health")

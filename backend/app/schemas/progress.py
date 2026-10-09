@@ -2,6 +2,8 @@ from datetime import date
 
 from pydantic import BaseModel
 
+from app.schemas.stats import RoundOut
+
 
 class WeekDay(BaseModel):
     day: date
@@ -17,3 +19,4 @@ class ProgressOut(BaseModel):
     current_streak: int
     best_streak: int
     week: list[WeekDay]  # Monday to Sunday
+    round: RoundOut

@@ -98,15 +98,18 @@ def solved_count_by_pattern(db: Session, user_id: int) -> dict[str, int]:
     return {pattern: count for pattern, count in rows}
 
 
-def suggest(db: Session, user_id: int, target_company: str | None, limit: int) -> list[Suggestion]:
-    """Top unsolved bank problems for this user, best first."""
+def suggest(
+    db: Session, user_id: int, target_company: str | None, limit: int, pattern: str | None = None
+) -> list[Suggestion]:
+    """Top unsolved bank problems for this user, best first. Optionally only one pattern."""
     solved_ids = select(UserProblem.problem_id).where(UserProblem.user_id == user_id)
-    candidates = db.scalars(
-        select(ProblemBank).where(
-            ProblemBank.id.not_in(solved_ids),  # only problems the user has not solved
-            ProblemBank.is_custom.is_(False),  # contest problems are not suggestions
-        )
-    ).all()
+    query = select(ProblemBank).where(
+        ProblemBank.id.not_in(solved_ids),  # only problems the user has not solved
+        ProblemBank.is_custom.is_(False),  # contest problems are not suggestions
+    )
+    if pattern:
+        query = query.where(ProblemBank.pattern == pattern)
+    candidates = db.scalars(query).all()
 
     by_pattern = solved_count_by_pattern(db, user_id)
     scored = [score_problem(p, target_company, by_pattern) for p in candidates]

@@ -10,7 +10,7 @@ import math
 from dataclasses import dataclass
 from datetime import date
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.models import Revision, UserProblem
@@ -135,3 +135,30 @@ def retire(db: Session, up: UserProblem) -> None:
     """Take a problem out of the loop for good."""
     up.status = "retired"
     db.commit()
+
+
+@dataclass
+class RoundInfo:
+    number: int  # which round you are in (starts at 1)
+    revised: int  # loop revisions done in this round
+    total: int  # problems in the line
+
+
+def round_info(db: Session, user_id: int) -> RoundInfo:
+    """Round progress. Every time the number of loop revisions reaches
+    the size of the line, one full round is complete.
+
+    Example: 164 in the line, 170 loop revisions -> round 2, 6 / 164 done.
+    """
+    line_size = db.scalar(
+        select(func.count()).select_from(UserProblem)
+        .where(UserProblem.user_id == user_id, UserProblem.status == "in_queue")
+    )
+    loop_revisions = db.scalar(
+        select(func.count()).select_from(Revision)
+        .join(UserProblem, Revision.user_problem_id == UserProblem.id)
+        .where(UserProblem.user_id == user_id, Revision.section == "loop")
+    )
+    if line_size == 0:
+        return RoundInfo(number=1, revised=0, total=0)
+    return RoundInfo(number=loop_revisions // line_size + 1, revised=loop_revisions % line_size, total=line_size)

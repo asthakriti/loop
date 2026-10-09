@@ -34,7 +34,8 @@ def list_bank(
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ):
-    query = select(ProblemBank)
+    # Custom (contest / other) problems belong to one user, so they are not shown in the shared bank.
+    query = select(ProblemBank).where(ProblemBank.is_custom.is_(False))
 
     # Add one WHERE condition for each filter the caller sent.
     if pattern:

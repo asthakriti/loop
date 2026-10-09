@@ -1,3 +1,5 @@
+from datetime import date
+
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.orm import Session
@@ -31,3 +33,8 @@ def get_current_user(
     if user is None:
         raise unauthorized
     return user
+
+
+def get_today() -> date:
+    """Today's date. Routes get it from here, so tests can replace it with a fixed date."""
+    return date.today()

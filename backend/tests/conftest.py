@@ -1,4 +1,5 @@
 import os
+from datetime import date
 from pathlib import Path
 
 import pytest
@@ -15,6 +16,9 @@ TEST_DATABASE_URL = os.getenv(
     "TEST_DATABASE_URL", "postgresql+psycopg://loop:loop@localhost:5433/loop_test"
 )
 ALEMBIC_INI = Path(__file__).resolve().parent.parent / "alembic.ini"
+
+# A fixed "today" for API tests, so results never depend on the real clock.
+TEST_TODAY = date(2026, 3, 10)
 
 
 def _create_fresh_database(url: str) -> None:
@@ -63,10 +67,12 @@ def client(db):
     """API test client that uses the test database session."""
     from fastapi.testclient import TestClient
 
+    from app.core.deps import get_today
     from app.database import get_db
     from app.main import app
 
     app.dependency_overrides[get_db] = lambda: db
+    app.dependency_overrides[get_today] = lambda: TEST_TODAY
     yield TestClient(app)
     app.dependency_overrides.clear()
 
@@ -78,3 +84,16 @@ def auth_headers(client):
     client.post("/auth/register", json=user)
     token = client.post("/auth/login", json=user).json()["access_token"]
     return {"Authorization": f"Bearer {token}"}
+
+
+@pytest.fixture
+def today():
+    return TEST_TODAY
+
+
+@pytest.fixture
+def bank(db):
+    """Load the real problem_bank.csv into the test database."""
+    from app.services.importer import import_bank
+
+    return import_bank(db)

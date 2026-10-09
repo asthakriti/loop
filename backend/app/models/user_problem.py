@@ -1,9 +1,10 @@
 from datetime import date
 
 from sqlalchemy import CheckConstraint, Date, ForeignKey, Integer, String, Text, UniqueConstraint
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
+from app.models.problem_bank import ProblemBank
 
 
 class UserProblem(Base):
@@ -29,3 +30,6 @@ class UserProblem(Base):
     last_revised_on: Mapped[date | None] = mapped_column(Date)  # NULL = never revised, so it goes first
     times_revised: Mapped[int] = mapped_column(Integer, default=0, server_default="0")
     notes: Mapped[str | None] = mapped_column(Text)
+
+    # The bank problem (title, link, pattern ...). lazy="joined" loads it in the same query.
+    problem: Mapped[ProblemBank] = relationship(lazy="joined")

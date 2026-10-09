@@ -1,16 +1,9 @@
 from datetime import date
 
-import pytest
 from sqlalchemy import func, select
 
 from app.models import ProblemBank, User, UserProblem
 from app.services.importer import import_bank
-
-
-@pytest.fixture
-def bank(db):
-    """Load the real problem_bank.csv into the test database."""
-    return import_bank(db)
 
 
 def count_problems(db):

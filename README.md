@@ -59,6 +59,17 @@ docker compose exec backend python -m scripts.import_bank   # with Docker
 python -m scripts.import_bank                               # or from the backend folder
 ```
 
+## Import your solved problems
+
+Register first, then load `backend/data/my_solved.csv` into your list.
+Imported problems go straight into the revision line. Problems you already have are skipped.
+
+```bash
+docker compose exec backend python -m scripts.import_my_solved you@example.com
+```
+
+Or upload the CSV with `POST /my/problems/import` in http://localhost:8000/docs.
+
 ## Try login
 
 1. Open http://localhost:8000/docs.
@@ -66,6 +77,7 @@ python -m scripts.import_bank                               # or from the backen
 3. `POST /auth/login` with the same body. Copy the `access_token`.
 4. Click **Authorize** (top right), paste the token, then try `GET /auth/me`.
 5. Try `GET /bank` with filters like `pattern=Design`, `company=Amazon`, `difficulty=Easy`, `q=sum`.
+6. Try `POST /my/problems` with `{"slug": "two-sum"}`, then `GET /my/problems`.
 
 Set your own long random `JWT_SECRET` in `.env` before deploying.
 

@@ -10,6 +10,8 @@ from app.core.deps import get_current_user, get_today
 from app.database import get_db
 from app.models import ProblemBank, User, UserProblem
 from app.schemas.my_problem import ImportResult, MyProblemCreate, MyProblemOut, MyProblemUpdate
+from app.schemas.today import DoneIn, DoneOut
+from app.services import queue
 from app.services.importer import get_or_create_custom_problem, import_my_solved, slug_from
 
 router = APIRouter(prefix="/my/problems", tags=["my problems"])
@@ -137,3 +139,33 @@ def delete_problem(
     db.delete(up)
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.post("/{user_problem_id}/done", response_model=DoneOut)
+def mark_done(
+    user_problem_id: int,
+    data: DoneIn,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+    today: date = Depends(get_today),
+):
+    up = get_own_problem(db, user, user_problem_id)
+    try:
+        revision = queue.mark_done(db, up, data.section, today)
+    except queue.AlreadyDoneToday:
+        raise HTTPException(status_code=409, detail="Already cleared today")
+    except queue.RetiredProblem:
+        raise HTTPException(status_code=400, detail="This problem is retired")
+    return DoneOut(xp_earned=revision.xp_earned)
+
+
+@router.post("/{user_problem_id}/retire", response_model=MyProblemOut)
+def retire_problem(
+    user_problem_id: int,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    up = get_own_problem(db, user, user_problem_id)
+    queue.retire(db, up)
+    db.refresh(up)
+    return to_out(up)

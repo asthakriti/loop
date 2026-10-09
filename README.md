@@ -22,8 +22,12 @@ Loop is a web app that helps freshers prepare for DSA interviews.
 docker compose up --build
 ```
 
+This starts Postgres, creates the tables (Alembic migration), then starts the API.
+
 Open http://localhost:8000/health. You should see `{"status": "ok"}`.
 API docs are at http://localhost:8000/docs.
+
+The Docker database is on port **5433** on your machine (not 5432), so it does not clash with a Postgres you may have installed locally.
 
 ### Option 2: Python on your machine
 
@@ -34,12 +38,22 @@ venv\Scripts\activate          # Windows
 # source venv/bin/activate     # Mac / Linux
 pip install -r requirements.txt
 copy .env.example .env         # Windows (use cp on Mac / Linux)
+docker compose up -d db        # start only the database
+alembic upgrade head           # create the tables
 uvicorn app.main:app --reload
 ```
 
-To start only the database with Docker: `docker compose up db`.
+### Database migrations
+
+```bash
+alembic upgrade head                              # apply all migrations
+alembic revision --autogenerate -m "what changed" # after editing a model
+```
 
 ## Run tests
+
+Tests need the Docker database running (`docker compose up -d db`).
+They create their own `loop_test` database, so your real data is never touched.
 
 ```bash
 cd backend

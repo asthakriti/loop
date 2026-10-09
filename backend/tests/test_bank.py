@@ -124,3 +124,32 @@ def test_get_one_problem(client, auth_headers, bank):
 def test_get_unknown_problem_is_404(client, auth_headers, bank):
     response = client.get("/bank/not-a-problem", headers=auth_headers)
     assert response.status_code == 404
+
+
+def test_sort_by_priority(client, auth_headers, db, bank):
+    user = db.scalar(select(User).where(User.email == "tester@example.com"))
+    two_sum = db.scalar(select(ProblemBank).where(ProblemBank.slug == "two-sum"))
+    db.add(UserProblem(user_id=user.id, problem_id=two_sum.id, solved_on=date(2026, 1, 5)))
+    db.commit()
+
+    everything = get_bank(client, auth_headers, sort="priority", page_size=100)["items"]
+    everything += get_bank(client, auth_headers, sort="priority", page_size=100, page=2)["items"]
+    everything += get_bank(client, auth_headers, sort="priority", page_size=100, page=3)["items"]
+    assert len(everything) == 278
+
+    unsolved = [p for p in everything if not p["solved"]]
+    assert everything[-1]["slug"] == "two-sum"  # solved problems go last
+    assert everything[-1]["priority"] is None
+    priorities = [p["priority"] for p in unsolved]
+    assert priorities == sorted(priorities, reverse=True)
+    assert all(p["reasons"] is not None for p in unsolved)
+
+    # Same first page as /suggest.
+    top = client.get("/suggest", headers=auth_headers, params={"limit": 5}).json()
+    assert [p["slug"] for p in everything[:5]] == [s["slug"] for s in top]
+
+
+def test_sort_by_priority_with_filter(client, auth_headers, bank):
+    result = get_bank(client, auth_headers, sort="priority", pattern="Design", page_size=100)
+    assert result["total"] == 25
+    assert all(p["pattern"] == "Design" for p in result["items"])

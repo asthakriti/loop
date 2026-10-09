@@ -27,8 +27,10 @@ export function mockRoutes(routes: Record<string, Handler>) {
     const handler = routes[key]
     if (!handler) return new Response(JSON.stringify({ detail: `No mock for ${key}` }), { status: 404 })
     const reply = typeof handler === 'function' ? handler(url, init) : handler
-    return new Response(JSON.stringify(reply.body ?? {}), {
-      status: reply.status ?? 200,
+    const status = reply.status ?? 200
+    // A 204 response must not have a body.
+    return new Response(status === 204 ? null : JSON.stringify(reply.body ?? {}), {
+      status,
       headers: { 'Content-Type': 'application/json' },
     })
   })

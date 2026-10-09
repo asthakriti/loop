@@ -17,6 +17,8 @@ class ProblemOut(BaseModel):
     is_custom: bool
     real_life: str | None
     solved: bool = False
+    priority: int | None = None  # 1-10, only for unsolved problems
+    reasons: list[str] = []
 
     @field_validator("companies", "sources", mode="before")
     @classmethod

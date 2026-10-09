@@ -1,0 +1,165 @@
+slug,title,link,difficulty,in_bank,pattern
+two-sum,Two Sum,https://leetcode.com/problems/two-sum/,Easy,true,Hashing
+add-two-numbers,Add Two Numbers,https://leetcode.com/problems/add-two-numbers/,Medium,true,Linked List
+longest-substring-without-repeating-characters,Longest Substring Without Repeating Characters,https://leetcode.com/problems/longest-substring-without-repeating-characters/,Medium,true,Sliding Window
+median-of-two-sorted-arrays,Median of Two Sorted Arrays,https://leetcode.com/problems/median-of-two-sorted-arrays/,Hard,true,Binary Search
+longest-palindromic-substring,Longest Palindromic Substring,https://leetcode.com/problems/longest-palindromic-substring/,Medium,true,Strings
+palindrome-number,Palindrome Number,https://leetcode.com/problems/palindrome-number/,Easy,true,Two Pointers
+container-with-most-water,Container With Most Water,https://leetcode.com/problems/container-with-most-water/,Medium,true,Two Pointers
+roman-to-integer,Roman to Integer,https://leetcode.com/problems/roman-to-integer/,Easy,true,Hashing
+longest-common-prefix,Longest Common Prefix,https://leetcode.com/problems/longest-common-prefix/,Easy,true,Strings
+3sum,3Sum,https://leetcode.com/problems/3sum/,Medium,true,Two Pointers
+remove-nth-node-from-end-of-list,Remove Nth Node From End of List,https://leetcode.com/problems/remove-nth-node-from-end-of-list/,Medium,true,Linked List
+valid-parentheses,Valid Parentheses,https://leetcode.com/problems/valid-parentheses/,Easy,true,Stack / Queue
+merge-two-sorted-lists,Merge Two Sorted Lists,https://leetcode.com/problems/merge-two-sorted-lists/,Easy,true,Linked List
+merge-k-sorted-lists,Merge k Sorted Lists,https://leetcode.com/problems/merge-k-sorted-lists/,Hard,true,Heap
+remove-duplicates-from-sorted-array,Remove Duplicates from Sorted Array,https://leetcode.com/problems/remove-duplicates-from-sorted-array/,Easy,true,Two Pointers
+divide-two-integers,Divide Two Integers,https://leetcode.com/problems/divide-two-integers/,Medium,true,Bit Manipulation
+next-permutation,Next Permutation,https://leetcode.com/problems/next-permutation/,Medium,true,Arrays
+search-in-rotated-sorted-array,Search in Rotated Sorted Array,https://leetcode.com/problems/search-in-rotated-sorted-array/,Medium,true,Binary Search
+find-first-and-last-position-of-element-in-sorted-array,Find First and Last Position of Element in Sorted Array,https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/,Medium,true,Binary Search
+search-insert-position,Search Insert Position,https://leetcode.com/problems/search-insert-position/,Easy,true,Binary Search
+count-and-say,Count and Say,https://leetcode.com/problems/count-and-say/,Medium,true,Strings
+trapping-rain-water,Trapping Rain Water,https://leetcode.com/problems/trapping-rain-water/,Hard,true,Two Pointers
+permutations,Permutations,https://leetcode.com/problems/permutations/,Medium,true,Recursion
+rotate-image,Rotate Image,https://leetcode.com/problems/rotate-image/,Medium,true,Arrays
+group-anagrams,Group Anagrams,https://leetcode.com/problems/group-anagrams/,Medium,true,Hashing
+maximum-subarray,Maximum Subarray,https://leetcode.com/problems/maximum-subarray/,Medium,true,Arrays
+spiral-matrix,Spiral Matrix,https://leetcode.com/problems/spiral-matrix/,Medium,true,Arrays
+merge-intervals,Merge Intervals,https://leetcode.com/problems/merge-intervals/,Medium,true,Sorting
+unique-paths,Unique Paths,https://leetcode.com/problems/unique-paths/,Medium,true,Basic DP
+minimum-path-sum,Minimum Path Sum,https://leetcode.com/problems/minimum-path-sum/,Medium,true,Basic DP
+sqrtx,Sqrt(x),https://leetcode.com/problems/sqrtx/,Easy,true,Binary Search
+climbing-stairs,Climbing Stairs,https://leetcode.com/problems/climbing-stairs/,Easy,true,Basic DP
+edit-distance,Edit Distance,https://leetcode.com/problems/edit-distance/,Medium,true,Basic DP
+set-matrix-zeroes,Set Matrix Zeroes,https://leetcode.com/problems/set-matrix-zeroes/,Medium,true,Arrays
+sort-colors,Sort Colors,https://leetcode.com/problems/sort-colors/,Medium,true,Two Pointers
+minimum-window-substring,Minimum Window Substring,https://leetcode.com/problems/minimum-window-substring/,Hard,true,Sliding Window
+word-search,Word Search,https://leetcode.com/problems/word-search/,Medium,true,Recursion
+search-in-rotated-sorted-array-ii,Search in Rotated Sorted Array II,https://leetcode.com/problems/search-in-rotated-sorted-array-ii/,Medium,true,Binary Search
+remove-duplicates-from-sorted-list,Remove Duplicates from Sorted List,https://leetcode.com/problems/remove-duplicates-from-sorted-list/,Easy,true,Linked List
+largest-rectangle-in-histogram,Largest Rectangle in Histogram,https://leetcode.com/problems/largest-rectangle-in-histogram/,Hard,true,Stack / Queue
+maximal-rectangle,Maximal Rectangle,https://leetcode.com/problems/maximal-rectangle/,Hard,true,Stack / Queue
+merge-sorted-array,Merge Sorted Array,https://leetcode.com/problems/merge-sorted-array/,Easy,true,Two Pointers
+binary-tree-inorder-traversal,Binary Tree Inorder Traversal,https://leetcode.com/problems/binary-tree-inorder-traversal/,Easy,true,Trees
+same-tree,Same Tree,https://leetcode.com/problems/same-tree/,Easy,true,Trees
+symmetric-tree,Symmetric Tree,https://leetcode.com/problems/symmetric-tree/,Easy,true,Trees
+binary-tree-level-order-traversal,Binary Tree Level Order Traversal,https://leetcode.com/problems/binary-tree-level-order-traversal/,Medium,true,Trees
+binary-tree-zigzag-level-order-traversal,Binary Tree Zigzag Level Order Traversal,https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/,Medium,true,Trees
+maximum-depth-of-binary-tree,Maximum Depth of Binary Tree,https://leetcode.com/problems/maximum-depth-of-binary-tree/,Easy,true,Trees
+balanced-binary-tree,Balanced Binary Tree,https://leetcode.com/problems/balanced-binary-tree/,Easy,true,Trees
+flatten-binary-tree-to-linked-list,Flatten Binary Tree to Linked List,https://leetcode.com/problems/flatten-binary-tree-to-linked-list/,Medium,true,Trees
+pascals-triangle,Pascal's Triangle,https://leetcode.com/problems/pascals-triangle/,Easy,true,Arrays
+best-time-to-buy-and-sell-stock,Best Time to Buy and Sell Stock,https://leetcode.com/problems/best-time-to-buy-and-sell-stock/,Easy,true,Arrays
+binary-tree-maximum-path-sum,Binary Tree Maximum Path Sum,https://leetcode.com/problems/binary-tree-maximum-path-sum/,Hard,true,Trees
+valid-palindrome,Valid Palindrome,https://leetcode.com/problems/valid-palindrome/,Easy,true,Two Pointers
+longest-consecutive-sequence,Longest Consecutive Sequence,https://leetcode.com/problems/longest-consecutive-sequence/,Medium,true,Hashing
+clone-graph,Clone Graph,https://leetcode.com/problems/clone-graph/,Medium,true,Graphs
+single-number,Single Number,https://leetcode.com/problems/single-number/,Easy,true,Bit Manipulation
+linked-list-cycle,Linked List Cycle,https://leetcode.com/problems/linked-list-cycle/,Easy,true,Linked List
+linked-list-cycle-ii,Linked List Cycle II,https://leetcode.com/problems/linked-list-cycle-ii/,Medium,true,Linked List
+binary-tree-preorder-traversal,Binary Tree Preorder Traversal,https://leetcode.com/problems/binary-tree-preorder-traversal/,Easy,true,Trees
+binary-tree-postorder-traversal,Binary Tree Postorder Traversal,https://leetcode.com/problems/binary-tree-postorder-traversal/,Easy,true,Trees
+sort-list,Sort List,https://leetcode.com/problems/sort-list/,Medium,true,Sorting
+evaluate-reverse-polish-notation,Evaluate Reverse Polish Notation,https://leetcode.com/problems/evaluate-reverse-polish-notation/,Medium,true,Stack / Queue
+reverse-words-in-a-string,Reverse Words in a String,https://leetcode.com/problems/reverse-words-in-a-string/,Medium,true,Strings
+find-minimum-in-rotated-sorted-array,Find Minimum in Rotated Sorted Array,https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/,Medium,true,Binary Search
+min-stack,Min Stack,https://leetcode.com/problems/min-stack/,Medium,true,Design
+intersection-of-two-linked-lists,Intersection of Two Linked Lists,https://leetcode.com/problems/intersection-of-two-linked-lists/,Easy,true,Linked List
+find-peak-element,Find Peak Element,https://leetcode.com/problems/find-peak-element/,Medium,true,Binary Search
+two-sum-ii-input-array-is-sorted,Two Sum II - Input Array Is Sorted,https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/,Medium,true,Two Pointers
+majority-element,Majority Element,https://leetcode.com/problems/majority-element/,Easy,true,Hashing
+rotate-array,Rotate Array,https://leetcode.com/problems/rotate-array/,Medium,true,Arrays
+house-robber,House Robber,https://leetcode.com/problems/house-robber/,Medium,true,Basic DP
+binary-tree-right-side-view,Binary Tree Right Side View,https://leetcode.com/problems/binary-tree-right-side-view/,Medium,true,Trees
+number-of-islands,Number of Islands,https://leetcode.com/problems/number-of-islands/,Medium,true,Graphs
+isomorphic-strings,Isomorphic Strings,https://leetcode.com/problems/isomorphic-strings/,Easy,true,Hashing
+reverse-linked-list,Reverse Linked List,https://leetcode.com/problems/reverse-linked-list/,Easy,true,Linked List
+course-schedule,Course Schedule,https://leetcode.com/problems/course-schedule/,Medium,true,Graphs
+minimum-size-subarray-sum,Minimum Size Subarray Sum,https://leetcode.com/problems/minimum-size-subarray-sum/,Medium,true,Sliding Window
+course-schedule-ii,Course Schedule II,https://leetcode.com/problems/course-schedule-ii/,Medium,true,Graphs
+house-robber-ii,House Robber II,https://leetcode.com/problems/house-robber-ii/,Medium,true,Basic DP
+kth-largest-element-in-an-array,Kth Largest Element in an Array,https://leetcode.com/problems/kth-largest-element-in-an-array/,Medium,true,Heap
+implement-stack-using-queues,Implement Stack using Queues,https://leetcode.com/problems/implement-stack-using-queues/,Easy,true,Design
+power-of-two,Power of Two,https://leetcode.com/problems/power-of-two/,Easy,true,Bit Manipulation
+implement-queue-using-stacks,Implement Queue using Stacks,https://leetcode.com/problems/implement-queue-using-stacks/,Easy,true,Design
+palindrome-linked-list,Palindrome Linked List,https://leetcode.com/problems/palindrome-linked-list/,Easy,true,Linked List
+lowest-common-ancestor-of-a-binary-search-tree,Lowest Common Ancestor of a Binary Search Tree,https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/,Medium,true,Trees
+lowest-common-ancestor-of-a-binary-tree,Lowest Common Ancestor of a Binary Tree,https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/,Medium,true,Trees
+delete-node-in-a-linked-list,Delete Node in a Linked List,https://leetcode.com/problems/delete-node-in-a-linked-list/,Medium,true,Linked List
+product-of-array-except-self,Product of Array Except Self,https://leetcode.com/problems/product-of-array-except-self/,Medium,true,Arrays
+sliding-window-maximum,Sliding Window Maximum,https://leetcode.com/problems/sliding-window-maximum/,Hard,true,Sliding Window
+valid-anagram,Valid Anagram,https://leetcode.com/problems/valid-anagram/,Easy,true,Hashing
+missing-number,Missing Number,https://leetcode.com/problems/missing-number/,Easy,true,Arrays
+move-zeroes,Move Zeroes,https://leetcode.com/problems/move-zeroes/,Easy,true,Two Pointers
+find-median-from-data-stream,Find Median from Data Stream,https://leetcode.com/problems/find-median-from-data-stream/,Hard,true,Design
+range-sum-query-immutable,Range Sum Query - Immutable,https://leetcode.com/problems/range-sum-query-immutable/,Easy,true,Arrays
+coin-change,Coin Change,https://leetcode.com/problems/coin-change/,Medium,true,Basic DP
+odd-even-linked-list,Odd Even Linked List,https://leetcode.com/problems/odd-even-linked-list/,Medium,true,Linked List
+top-k-frequent-elements,Top K Frequent Elements,https://leetcode.com/problems/top-k-frequent-elements/,Medium,true,Hashing
+first-unique-character-in-a-string,First Unique Character in a String,https://leetcode.com/problems/first-unique-character-in-a-string/,Easy,true,Hashing
+longest-repeating-character-replacement,Longest Repeating Character Replacement,https://leetcode.com/problems/longest-repeating-character-replacement/,Medium,true,Sliding Window
+delete-node-in-a-bst,Delete Node in a BST,https://leetcode.com/problems/delete-node-in-a-bst/,Medium,true,Trees
+max-consecutive-ones,Max Consecutive Ones,https://leetcode.com/problems/max-consecutive-ones/,Easy,true,Arrays
+next-greater-element-i,Next Greater Element I,https://leetcode.com/problems/next-greater-element-i/,Easy,true,Stack / Queue
+next-greater-element-ii,Next Greater Element II,https://leetcode.com/problems/next-greater-element-ii/,Medium,true,Stack / Queue
+fibonacci-number,Fibonacci Number,https://leetcode.com/problems/fibonacci-number/,Easy,true,Recursion
+longest-palindromic-subsequence,Longest Palindromic Subsequence,https://leetcode.com/problems/longest-palindromic-subsequence/,Medium,true,Basic DP
+coin-change-ii,Coin Change II,https://leetcode.com/problems/coin-change-ii/,Medium,true,Basic DP
+single-element-in-a-sorted-array,Single Element in a Sorted Array,https://leetcode.com/problems/single-element-in-a-sorted-array/,Medium,true,Binary Search
+diameter-of-binary-tree,Diameter of Binary Tree,https://leetcode.com/problems/diameter-of-binary-tree/,Easy,true,Trees
+number-of-provinces,Number of Provinces,https://leetcode.com/problems/number-of-provinces/,Medium,true,Graphs
+subarray-sum-equals-k,Subarray Sum Equals K,https://leetcode.com/problems/subarray-sum-equals-k/,Medium,true,Hashing
+delete-operation-for-two-strings,Delete Operation for Two Strings,https://leetcode.com/problems/delete-operation-for-two-strings/,Medium,true,Basic DP
+palindromic-substrings,Palindromic Substrings,https://leetcode.com/problems/palindromic-substrings/,Medium,true,Strings
+maximum-width-of-binary-tree,Maximum Width of Binary Tree,https://leetcode.com/problems/maximum-width-of-binary-tree/,Medium,true,Trees
+valid-palindrome-ii,Valid Palindrome II,https://leetcode.com/problems/valid-palindrome-ii/,Easy,true,Two Pointers
+repeated-string-match,Repeated String Match,https://leetcode.com/problems/repeated-string-match/,Medium,true,Strings
+top-k-frequent-words,Top K Frequent Words,https://leetcode.com/problems/top-k-frequent-words/,Medium,true,Heap
+max-area-of-island,Max Area of Island,https://leetcode.com/problems/max-area-of-island/,Medium,true,Graphs
+search-in-a-binary-search-tree,Search in a Binary Search Tree,https://leetcode.com/problems/search-in-a-binary-search-tree/,Easy,true,Trees
+insert-into-a-binary-search-tree,Insert into a Binary Search Tree,https://leetcode.com/problems/insert-into-a-binary-search-tree/,Medium,true,Trees
+kth-largest-element-in-a-stream,Kth Largest Element in a Stream,https://leetcode.com/problems/kth-largest-element-in-a-stream/,Easy,true,Design
+binary-search,Binary Search,https://leetcode.com/problems/binary-search/,Easy,true,Binary Search
+flood-fill,Flood Fill,https://leetcode.com/problems/flood-fill/,Easy,true,Graphs
+asteroid-collision,Asteroid Collision,https://leetcode.com/problems/asteroid-collision/,Medium,true,Stack / Queue
+network-delay-time,Network Delay Time,https://leetcode.com/problems/network-delay-time/,Medium,true,Graphs
+is-graph-bipartite,Is Graph Bipartite?,https://leetcode.com/problems/is-graph-bipartite/,Medium,true,Graphs
+cheapest-flights-within-k-stops,Cheapest Flights Within K Stops,https://leetcode.com/problems/cheapest-flights-within-k-stops/,Medium,true,Graphs
+rotate-string,Rotate String,https://leetcode.com/problems/rotate-string/,Easy,true,Strings
+transpose-matrix,Transpose Matrix,https://leetcode.com/problems/transpose-matrix/,Easy,true,Arrays
+koko-eating-bananas,Koko Eating Bananas,https://leetcode.com/problems/koko-eating-bananas/,Medium,true,Binary Search
+middle-of-the-linked-list,Middle of the Linked List,https://leetcode.com/problems/middle-of-the-linked-list/,Easy,true,Linked List
+fruit-into-baskets,Fruit Into Baskets,https://leetcode.com/problems/fruit-into-baskets/,Medium,true,Sliding Window
+sort-array-by-parity,Sort Array By Parity,https://leetcode.com/problems/sort-array-by-parity/,Easy,true,Two Pointers
+sum-of-subarray-minimums,Sum of Subarray Minimums,https://leetcode.com/problems/sum-of-subarray-minimums/,Medium,true,Stack / Queue
+sort-an-array,Sort an Array,https://leetcode.com/problems/sort-an-array/,Medium,true,Sorting
+minimum-add-to-make-parentheses-valid,Minimum Add to Make Parentheses Valid,https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/,Medium,true,Stack / Queue
+vertical-order-traversal-of-a-binary-tree,Vertical Order Traversal of a Binary Tree,https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/,Hard,true,Trees
+rotting-oranges,Rotting Oranges,https://leetcode.com/problems/rotting-oranges/,Medium,true,Graphs
+max-consecutive-ones-iii,Max Consecutive Ones III,https://leetcode.com/problems/max-consecutive-ones-iii/,Medium,true,Sliding Window
+remove-outermost-parentheses,Remove Outermost Parentheses,https://leetcode.com/problems/remove-outermost-parentheses/,Easy,true,Stack / Queue
+shortest-path-in-binary-matrix,Shortest Path in Binary Matrix,https://leetcode.com/problems/shortest-path-in-binary-matrix/,Medium,true,Graphs
+longest-common-subsequence,Longest Common Subsequence,https://leetcode.com/problems/longest-common-subsequence/,Medium,true,Basic DP
+find-the-smallest-divisor-given-a-threshold,Find the Smallest Divisor Given a Threshold,https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold/,Medium,true,Binary Search
+minimum-insertion-steps-to-make-a-string-palindrome,Minimum Insertion Steps to Make a String Palindrome,https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/,Hard,true,Basic DP
+count-good-nodes-in-binary-tree,Count Good Nodes in Binary Tree,https://leetcode.com/problems/count-good-nodes-in-binary-tree/,Medium,true,Trees
+running-sum-of-1d-array,Running Sum of 1d Array,https://leetcode.com/problems/running-sum-of-1d-array/,Easy,true,Arrays
+minimum-number-of-days-to-make-m-bouquets,Minimum Number of Days to Make m Bouquets,https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/,Medium,true,Binary Search
+path-with-minimum-effort,Path With Minimum Effort,https://leetcode.com/problems/path-with-minimum-effort/,Medium,true,Graphs
+check-if-array-is-sorted-and-rotated,Check if Array Is Sorted and Rotated,https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/,Easy,true,Arrays
+frequency-of-the-most-frequent-element,Frequency of the Most Frequent Element,https://leetcode.com/problems/frequency-of-the-most-frequent-element/,Medium,true,Sliding Window
+largest-odd-number-in-string,Largest Odd Number in String,https://leetcode.com/problems/largest-odd-number-in-string/,Easy,true,Strings
+delete-the-middle-node-of-a-linked-list,Delete the Middle Node of a Linked List,https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list/,Medium,true,Linked List
+rearrange-array-elements-by-sign,Rearrange Array Elements by Sign,https://leetcode.com/problems/rearrange-array-elements-by-sign/,Medium,true,Two Pointers
+sum-of-largest-prime-substrings,Sum of Largest Prime Substrings,https://leetcode.com/problems/sum-of-largest-prime-substrings/,Medium,false,Contest / other
+number-of-intersecting-interval-pairs-i,Number of Intersecting Interval Pairs I,https://leetcode.com/problems/number-of-intersecting-interval-pairs-i/,Easy,false,Contest / other
+number-of-intersecting-interval-pairs-ii,Number of Intersecting Interval Pairs II,https://leetcode.com/problems/number-of-intersecting-interval-pairs-ii/,Medium,false,Contest / other
+maximum-pulse-value-after-one-subarray-rotation,Maximum Pulse Value After One Subarray Rotation,https://leetcode.com/problems/maximum-pulse-value-after-one-subarray-rotation/,Medium,false,Contest / other
+lexicographically-largest-power-array,Lexicographically Largest Power Array,https://leetcode.com/problems/lexicographically-largest-power-array/,Hard,false,Contest / other
+minimum-queen-moves-to-reach-target,Minimum Queen Moves to Reach Target,https://leetcode.com/problems/minimum-queen-moves-to-reach-target/,Easy,false,Contest / other
+transform-array-using-pair-operations,Transform Array Using Pair Operations,https://leetcode.com/problems/transform-array-using-pair-operations/,Medium,false,Contest / other
+longest-subarray-divisible-by-k-with-at-most-one-negation-i,Longest Subarray Divisible by K with At Most One Negation I,https://leetcode.com/problems/longest-subarray-divisible-by-k-with-at-most-one-negation-i/,Medium,false,Contest / other
+rearrange-array-by-removing-distinct-values,Rearrange Array by Removing Distinct Values,https://leetcode.com/problems/rearrange-array-by-removing-distinct-values/,Easy,false,Contest / other
+maximum-equal-adjacent-pairs-after-at-most-one-replacement,Maximum Equal Adjacent Pairs After at Most One Replacement,https://leetcode.com/problems/maximum-equal-adjacent-pairs-after-at-most-one-replacement/,Medium,false,Contest / other
+longest-subarray-with-restricted-pair-sums,Longest Subarray With Restricted Pair Sums,https://leetcode.com/problems/longest-subarray-with-restricted-pair-sums/,Medium,false,Contest / other

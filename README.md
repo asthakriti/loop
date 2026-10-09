@@ -79,6 +79,7 @@ Or upload the CSV with `POST /my/problems/import` in http://localhost:8000/docs.
 5. Try `GET /bank` with filters like `pattern=Design`, `company=Amazon`, `difficulty=Easy`, `q=sum`.
 6. Try `POST /my/problems` with `{"slug": "two-sum"}`, then `GET /my/problems`.
 7. Try `GET /today`, then clear a problem with `POST /my/problems/{id}/done` and `{"section": "loop"}`.
+8. Try `PUT /settings` with `{"round_days": 60}` and see `GET /today` give fewer problems per day.
 
 ## How the round robin works
 

@@ -22,9 +22,9 @@ def test_today_shape_after_import(client, auth_headers, bank):
     assert today["daily_count"] == 6  # 164 problems, default 30 day round
     assert len(today["loop"]) == 6
     assert today["warmup"] == []
-    assert today["new"] == []
+    assert len(today["new"]) == 2  # default new_per_day
     assert today["warning"] is None
-    assert (today["done_count"], today["total_count"], today["xp_today"]) == (0, 6, 0)
+    assert (today["done_count"], today["total_count"], today["xp_today"]) == (0, 8, 0)
 
     item = today["loop"][0]
     assert item["title"] == "Two Sum"
@@ -44,7 +44,7 @@ def test_clear_it_updates_today(client, auth_headers, bank):
     today = get_today(client, auth_headers)
     assert today["loop"][0]["id"] == first_id
     assert today["loop"][0]["done_today"] is True
-    assert (today["done_count"], today["total_count"], today["xp_today"]) == (1, 6, 15)
+    assert (today["done_count"], today["total_count"], today["xp_today"]) == (1, 8, 15)
 
 
 def test_done_twice_same_day_is_409(client, auth_headers, bank):

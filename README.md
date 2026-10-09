@@ -80,6 +80,7 @@ Or upload the CSV with `POST /my/problems/import` in http://localhost:8000/docs.
 6. Try `POST /my/problems` with `{"slug": "two-sum"}`, then `GET /my/problems`.
 7. Try `GET /today`, then clear a problem with `POST /my/problems/{id}/done` and `{"section": "loop"}`.
 8. Try `PUT /settings` with `{"round_days": 60}` and see `GET /today` give fewer problems per day.
+9. Try `GET /suggest?limit=5`. Set `{"target_company": "Amazon"}` in settings and try again.
 
 ## How the round robin works
 
@@ -88,6 +89,22 @@ All your solved problems wait in one line, ordered by the date you last revised 
 When you clear one, its date becomes today, so it goes to the back of the line.
 With 164 problems and a 30 day round, that is 6 a day, and each problem comes back about once a month.
 Missed a day? Nothing is lost. The line just waits.
+
+## How new problems are picked
+
+Every unsolved problem in the bank gets a score:
+
+| Rule | Points |
+|---|---|
+| Fresher topic (Arrays, Strings, Hashing, Binary Search, Sorting) | +3 |
+| Your target company asks it | +3 |
+| In 2 or more famous lists (Blind 75, NeetCode 150, ...) | +2 |
+| Easy or Medium | +2 |
+| Design problem | +3 |
+| You solved fewer than 3 in this pattern | +2 |
+| Hard | -2 |
+
+Highest score first (max 15, shown as "Priority X/10"). The reasons are shown as tags.
 
 Set your own long random `JWT_SECRET` in `.env` before deploying.
 

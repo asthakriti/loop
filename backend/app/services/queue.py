@@ -117,8 +117,11 @@ def mark_done(db: Session, up: UserProblem, section: str, today: date) -> Revisi
 
     up.last_revised_on = today
     up.times_revised += 1
-    if up.status == "new":
-        up.status = "in_queue"  # after its first revision, a new problem joins the line
+    # After its warm-up, a new problem joins the line.
+    # "Solved it" on a new quest (section "new") keeps it as "new",
+    # so it still shows in Warm-up tomorrow.
+    if up.status == "new" and section != "new":
+        up.status = "in_queue"
 
     revision = Revision(
         user_problem_id=up.id, revised_on=today, section=section, xp_earned=XP_PER_SECTION[section]

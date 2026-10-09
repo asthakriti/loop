@@ -10,9 +10,10 @@ from app.core.deps import get_current_user, get_today
 from app.database import get_db
 from app.models import ProblemBank, User, UserProblem
 from app.routers.today import build_today_page
+from app.schemas.badge import BadgeOut
 from app.schemas.my_problem import ImportResult, MyProblemCreate, MyProblemOut, MyProblemUpdate
 from app.schemas.today import DoneIn, DoneOut
-from app.services import queue, xp
+from app.services import badges, queue, xp
 from app.services.importer import get_or_create_custom_problem, import_my_solved, slug_from
 
 router = APIRouter(prefix="/my/problems", tags=["my problems"])
@@ -164,6 +165,7 @@ def mark_done(
 
     stats = xp.award(db, user.id, revision.xp_earned, today, all_done)
     level = xp.level_for(stats.total_xp)
+    new_badges = badges.check_badges(db, user.id, today)
     return DoneOut(
         xp_earned=revision.xp_earned,
         total_xp=stats.total_xp,
@@ -171,6 +173,7 @@ def mark_done(
         level_name=level.name,
         streak=xp.current_streak(stats, today),
         all_done=all_done,
+        new_badges=[BadgeOut.model_validate(b) for b in new_badges],
     )
 
 

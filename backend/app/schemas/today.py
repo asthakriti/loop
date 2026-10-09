@@ -3,6 +3,8 @@ from typing import Literal
 
 from pydantic import BaseModel
 
+from app.schemas.badge import BadgeOut
+
 Section = Literal["warmup", "loop", "new"]
 
 
@@ -59,3 +61,4 @@ class DoneOut(BaseModel):
     level_name: str
     streak: int
     all_done: bool  # True when every quest of today is cleared
+    new_badges: list[BadgeOut]  # badges unlocked by this 'done'

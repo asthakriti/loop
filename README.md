@@ -82,12 +82,14 @@ Or upload the CSV with `POST /my/problems/import` in http://localhost:8000/docs.
 8. Try `PUT /settings` with `{"round_days": 60}` and see `GET /today` give fewer problems per day.
 9. Try `GET /suggest?limit=5`. Set `{"target_company": "Amazon"}` in settings and try again.
 10. Try `GET /me/progress` for XP, level, streak and this week.
+11. Try `GET /badges`. A `done` response lists any badge it just unlocked in `new_badges`.
 
 ## XP, levels and streak
 
 - Clearing a problem gives XP: Warm-up +10, The Loop +15, New quest +30.
 - 10 levels, from Beginner (0 XP) to Interview Ready (2400 XP).
 - Clear **every** quest of the day to grow your streak. Miss a day and it starts again (your best streak is kept).
+- 7 badges: Century (100 solved), Double Century (200), Full circle (whole line revised once), Builder (first design problem), Explorer (first Graphs problem), On fire (7-day streak), Unstoppable (30-day streak).
 
 ## How the round robin works
 

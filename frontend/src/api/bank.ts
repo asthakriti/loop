@@ -27,6 +27,7 @@ export type BankFilters = {
   company?: string
   difficulty?: string
   is_design?: boolean
+  solved?: boolean // only `true` is sent
   page?: number
   page_size?: number
 }

@@ -25,7 +25,7 @@ export function Nav() {
 
   return (
     <header className="border-b border-border bg-bg/80 backdrop-blur">
-      <nav className="mx-auto flex h-16 max-w-[1200px] items-center gap-6 px-4" aria-label="Main">
+      <nav className="mx-auto flex h-16 max-w-[1200px] items-center gap-3 px-4 md:gap-6" aria-label="Main">
         <Link to="/" aria-label="Loop home">
           <LoopLogo />
         </Link>
@@ -67,6 +67,14 @@ export function Nav() {
             {menuOpen && (
               <div className="absolute right-0 top-13 z-10 w-56 rounded-btn border border-border-strong bg-surface p-2 shadow-xl">
                 <p className="truncate px-2 py-1.5 text-sm text-muted">{email}</p>
+                {/* On phones the bottom tabs have no Problem bank tab, so it lives here. */}
+                <Link
+                  to="/bank"
+                  onClick={() => setMenuOpen(false)}
+                  className="block rounded-lg px-2 py-2 text-sm hover:bg-surface-2 md:hidden"
+                >
+                  Problem bank
+                </Link>
                 <button
                   type="button"
                   onClick={logout}

@@ -29,7 +29,7 @@ export function useToasts(durationMs = 3500) {
 
 export function ToastList({ toasts }: { toasts: Toast[] }) {
   return (
-    <div role="status" aria-live="polite" className="pointer-events-none fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
+    <div role="status" aria-live="polite" className="pointer-events-none fixed bottom-24 right-4 z-50 md:bottom-6 md:right-6 flex flex-col items-end gap-2">
       {toasts.map((t) => (
         <div key={t.id} className={`rounded-btn border bg-surface px-4 py-2.5 font-mono text-sm shadow-xl ${STYLE[t.kind]}`}>
           {t.text}

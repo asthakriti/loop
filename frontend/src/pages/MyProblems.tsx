@@ -76,7 +76,7 @@ function ProblemRow({ problem, onChanged, onDeleted, onError }: RowProps) {
         </div>
       </td>
       <td className="py-3 pr-3">
-        <span className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs ${STATUS_STYLE[problem.status]}`}>
+        <span className={`inline-flex whitespace-nowrap rounded-full border px-2.5 py-0.5 text-xs ${STATUS_STYLE[problem.status]}`}>
           {STATUS_LABEL[problem.status]}
         </span>
       </td>

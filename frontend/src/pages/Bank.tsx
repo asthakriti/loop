@@ -11,8 +11,8 @@ const PAGE_SIZE = 25
 
 function BankRow({ problem, busy, onAdd }: { problem: BankProblem; busy: boolean; onAdd: () => void }) {
   return (
-    <li className="flex flex-wrap items-center gap-4 border-t border-border py-4 first:border-t-0">
-      <div className="w-32 shrink-0">
+    <li className="flex flex-col gap-3 border-t border-border py-4 first:border-t-0 sm:flex-row sm:items-center sm:gap-4">
+      <div className="shrink-0 sm:w-32">
         {problem.solved ? (
           <span className="inline-flex items-center gap-1 font-mono text-xs text-mint">
             <CheckIcon size={14} /> Solved
@@ -50,7 +50,7 @@ function BankRow({ problem, busy, onAdd }: { problem: BankProblem; busy: boolean
           onClick={onAdd}
           disabled={busy}
           aria-label={`Add ${problem.title} to my problems`}
-          className="h-11 rounded-btn border border-border-strong px-4 text-sm hover:bg-surface-2 disabled:opacity-50"
+          className="h-11 shrink-0 rounded-btn border border-border-strong px-4 text-sm hover:bg-surface-2 disabled:opacity-50"
         >
           {busy ? 'Adding…' : 'Add to my problems'}
         </button>

@@ -106,8 +106,8 @@ export function Today() {
   return (
     <div className="flex flex-col gap-6">
       {/* ---------- Hero ---------- */}
-      <div className="grid gap-6 lg:grid-cols-2">
-        <div className="flex flex-col gap-4">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="flex min-w-0 flex-col gap-4">
           <div>
             <p className="font-mono text-xs uppercase tracking-widest text-muted">{dateLabel(new Date())}</p>
             <h1 className="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">Keep the loop going.</h1>
@@ -118,7 +118,7 @@ export function Today() {
               quests cleared today. {cheer(today.done_count, today.total_count)}
             </p>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <LevelCard progress={progress} />
             <StreakCard progress={progress} />
           </div>
@@ -141,8 +141,8 @@ export function Today() {
       )}
 
       {/* ---------- Main + side ---------- */}
-      <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
-        <div className="flex flex-col gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <div className="flex min-w-0 flex-col gap-6">
           {today.total_count === 0 && (
             <p className="rounded-card border border-border bg-surface p-5 text-muted">
               Your line is empty. Go to{' '}
@@ -195,7 +195,7 @@ export function Today() {
               icon={<SparkIcon />}
               tone="bg-accent/15 text-accent"
             >
-              <div className="grid gap-3 md:grid-cols-2">
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                 {today.new.map((quest) => (
                   <NewQuestCard key={quest.slug} quest={quest} busy={busyKey === `new-${quest.slug}`} onSolved={() => solve(quest.slug)} />
                 ))}

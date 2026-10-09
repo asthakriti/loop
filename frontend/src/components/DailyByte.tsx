@@ -52,7 +52,7 @@ export function DailyByte() {
   )
 
   return (
-    <section aria-labelledby="byte-heading" className="flex h-full flex-col rounded-card border border-byte-border bg-byte-bg p-5">
+    <section aria-labelledby="byte-heading" className="flex h-full min-w-0 flex-col rounded-card border border-byte-border bg-byte-bg p-5">
       <div className="flex items-center justify-between gap-3">
         <h2 id="byte-heading" className="font-mono text-xs uppercase tracking-widest text-lavender">
           Daily Byte

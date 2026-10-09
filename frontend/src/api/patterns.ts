@@ -23,3 +23,7 @@ export type PatternInfo = {
 export function getPatterns() {
   return api<PatternInfo[]>('/patterns')
 }
+
+export function getSuggestions(limit = 1) {
+  return api<Suggestion[]>(`/suggest?limit=${limit}`)
+}

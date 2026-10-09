@@ -1,0 +1,153 @@
+type,title,content,why_it_matters,topic
+code,Two Sum in one pass,"def two_sum(nums, target):
+    seen = {}  # value -> index
+    for i, n in enumerate(nums):
+        if target - n in seen:
+            return [seen[target - n], i]
+        seen[n] = i
+
+print(two_sum([2, 7, 11, 15], 9))  # [0, 1]",A hash map turns an O(n^2) search for a pair into one O(n) pass.,Hashing
+code,Group anagrams with defaultdict,"from collections import defaultdict
+
+def group_anagrams(words):
+    groups = defaultdict(list)  # sorted letters -> words
+    for w in words:
+        groups["""".join(sorted(w))].append(w)
+    return list(groups.values())
+
+print(group_anagrams([""eat"", ""tea"", ""tan"", ""nat""]))","defaultdict(list) removes the 'if key not in dict' check, so grouping code stays short.",Hashing
+code,Sliding window: best sum of k in a row,"def max_sum_k(nums, k):
+    window = sum(nums[:k])
+    best = window
+    for i in range(k, len(nums)):
+        window += nums[i] - nums[i - k]  # add new, drop old
+        best = max(best, window)
+    return best
+
+print(max_sum_k([2, 1, 5, 1, 3, 2], 3))  # 9",Reusing the last window's sum makes it O(n) instead of O(n * k).,Sliding Window
+code,"Binary search, the safe way","def binary_search(nums, target):
+    lo, hi = 0, len(nums) - 1
+    while lo <= hi:
+        mid = lo + (hi - lo) // 2  # no overflow in other languages
+        if nums[mid] == target:
+            return mid
+        if nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return -1","lo + (hi - lo) // 2 avoids integer overflow in Java and C++, a classic interview follow-up.",Binary Search
+code,bisect finds the insert position,"import bisect
+
+scores = [10, 20, 30, 40]
+pos = bisect.bisect_left(scores, 25)
+print(pos)  # 2, where 25 would go
+
+bisect.insort(scores, 25)  # insert and keep it sorted
+print(scores)  # [10, 20, 25, 30, 40]",Python's bisect gives you a tested binary search in one line.,Binary Search
+code,Two pointers: is it a palindrome?,"def is_palindrome(s):
+    s = [c.lower() for c in s if c.isalnum()]
+    left, right = 0, len(s) - 1
+    while left < right:
+        if s[left] != s[right]:
+            return False
+        left, right = left + 1, right - 1
+    return True
+
+print(is_palindrome(""A man, a plan, a canal: Panama""))  # True",Two pointers moving inward check the whole string in one O(n) pass.,Two Pointers
+code,Prefix sums for fast range totals,"nums = [3, 1, 4, 1, 5]
+prefix = [0]
+for n in nums:
+    prefix.append(prefix[-1] + n)
+
+# sum of nums[i..j] = prefix[j + 1] - prefix[i]
+print(prefix[4] - prefix[1])  # 1 + 4 + 1 = 6","After one O(n) pass, every range sum is O(1). Many subarray problems start here.",Arrays
+code,Reverse a linked list,"class Node:
+    def __init__(self, val, next=None):
+        self.val, self.next = val, next
+
+def reverse(head):
+    prev = None
+    while head:
+        head.next, prev, head = prev, head, head.next
+    return prev","Three pointers (prev, current, next) is the base of many linked list problems.",Linked List
+code,Monotonic stack: next greater element,"def next_greater(nums):
+    result = [-1] * len(nums)
+    stack = []  # indexes still waiting for a bigger number
+    for i, n in enumerate(nums):
+        while stack and nums[stack[-1]] < n:
+            result[stack.pop()] = n
+        stack.append(i)
+    return result
+
+print(next_greater([2, 1, 5, 3]))  # [5, 5, -1, -1]","Each index is pushed and popped once, so it is O(n) instead of O(n^2).",Stack / Queue
+code,BFS with a deque,"from collections import deque
+
+def bfs(graph, start):
+    seen, queue = {start}, deque([start])
+    while queue:
+        node = queue.popleft()  # O(1), list.pop(0) is O(n)
+        print(node)
+        for nxt in graph[node]:
+            if nxt not in seen:
+                seen.add(nxt)
+                queue.append(nxt)","BFS finds the shortest path in an unweighted graph. Use deque, not a list, for the queue.",Graphs
+code,Top k with heapq,"import heapq
+
+nums = [5, 1, 9, 3, 7]
+print(heapq.nlargest(2, nums))   # [9, 7]
+print(heapq.nsmallest(2, nums))  # [1, 3]
+
+heap = []
+for n in nums:
+    heapq.heappush(heap, -n)  # negate for a max-heap
+print(-heap[0])  # 9",heapq is a min-heap only. Push negative numbers when you need a max-heap.,Heap
+code,Count with Counter,"from collections import Counter
+
+def is_anagram(a, b):
+    return Counter(a) == Counter(b)
+
+print(is_anagram(""listen"", ""silent""))  # True
+print(Counter(""banana"").most_common(1))  # [('a', 3)]",Counter counts items in O(n) and makes frequency problems one-liners.,Hashing
+code,Memoize with lru_cache,"from functools import lru_cache
+
+@lru_cache(maxsize=None)
+def climb(n):
+    # ways to climb n stairs taking 1 or 2 steps
+    if n <= 2:
+        return n
+    return climb(n - 1) + climb(n - 2)
+
+print(climb(40))  # 165580141, instant",Caching results turns exponential recursion into O(n). This is top-down DP.,Basic DP
+code,Union-Find with path compression,"parent = list(range(5))  # each node starts as its own root
+def find(x):
+    if parent[x] != x:
+        parent[x] = find(parent[x])  # point straight to the root
+    return parent[x]
+
+def union(a, b):
+    parent[find(a)] = find(b)
+
+union(0, 1); union(1, 2)
+print(find(0) == find(2))  # True",Union-Find answers 'are these connected?' almost in O(1). Used in Kruskal and cycle checks.,Graphs
+code,Bit tricks: power of two,"def is_power_of_two(n):
+    # a power of two has exactly one 1 bit
+    return n > 0 and n & (n - 1) == 0
+
+print(is_power_of_two(16))  # True
+print(is_power_of_two(18))  # False
+print(bin(18).count(""1""))   # 2 set bits",n & (n - 1) removes the lowest 1 bit. It shows up in many bit problems.,Bit Manipulation
+fact,Python sorts with Timsort,"Python's sort() and sorted() use Timsort, written by Tim Peters in 2002. It mixes merge sort and insertion sort, and is very fast on data that is already partly sorted.","Python's sort is O(n log n) and stable, so equal items keep their order.",Sorting
+fact,Dijkstra's 20-minute algorithm,"Edsger Dijkstra designed his shortest-path algorithm in about 20 minutes in 1956, while sitting at a cafe in Amsterdam, without pen and paper. He published it in 1959.",It still powers route finding in maps and network routing today.,Graphs
+fact,The binary search bug in Java,In 2006 Joshua Bloch wrote that Java's own binary search had a bug for years: (low + high) / 2 can overflow when the array is huge. The fix is low + (high - low) / 2.,Even simple code has edge cases. Interviewers love to ask about this one.,Binary Search
+fact,Quicksort was born in Moscow,Tony Hoare invented quicksort in 1959 while he was a visiting student in Moscow. He needed to sort words for a Russian to English translation program.,"Quicksort's partition idea is behind Quickselect, which finds the k-th smallest item.",Sorting
+fact,Merge sort is from 1945,"John von Neumann invented merge sort in 1945, one of the earliest sorting algorithms written for a computer.","Merge sort is the classic example of divide and conquer, and it is stable.",Sorting
+fact,The first hash table idea,"Hans Peter Luhn at IBM wrote about hashing in 1953, including putting items that clash into chained lists.","Python's dict and set are hash tables, which is why lookups are O(1) on average.",Hashing
+fact,Graph theory began with seven bridges,In 1736 Leonhard Euler proved you cannot walk across all seven bridges of Konigsberg exactly once. This is seen as the start of graph theory.,Every graph problem you solve today goes back to this puzzle.,Graphs
+fact,Why it is called dynamic programming,Richard Bellman named dynamic programming in the 1950s. He wrote that he picked the name partly because it sounded impressive and hid that he was doing mathematical research.,The name says little. The idea is simple: solve small subproblems once and reuse them.,Basic DP
+fact,Trie comes from retrieval,"Edward Fredkin coined the name trie in 1960, from the word retrieval. He said it like tree, but many people say try to tell it apart.",Tries power autocomplete and prefix search.,Design
+fact,The tortoise and the hare,"Floyd's cycle detection uses a slow pointer and a fast pointer. If there is a loop, the fast one catches up with the slow one. It needs only O(1) extra memory.",This is the standard answer for Linked List Cycle and Find the Duplicate Number.,Linked List
+fact,A* was built for a robot,"The A* search algorithm was published in 1968 by Peter Hart, Nils Nilsson and Bertram Raphael at SRI, for the Shakey robot project.","A* adds a smart guess (heuristic) to Dijkstra, and is used in games and maps.",Graphs
+fact,Python dicts keep insertion order,"Since Python 3.7, dict keeps keys in the order you inserted them. This is part of the language, not just a detail of one version.",You can build an ordered result straight from a dict without sorting again.,Hashing
+fact,Python ints never overflow,"Python's int has arbitrary precision, so it grows as big as memory allows. Java's int stops at 2^31 - 1 and wraps around.","Overflow bugs from Java or C++ will not show in Python, but interviewers may still ask about them.",Bit Manipulation
+fact,KMP string search,The Knuth-Morris-Pratt algorithm was published in 1977. It finds a pattern in text in O(n + m) by never moving backward in the text.,Its prefix table idea is used in many string problems.,Strings
+fact,Bloom filters say maybe,"Burton Bloom described the Bloom filter in 1970. It can say an item is definitely not in a set, or probably is, using very little memory.",Databases and browsers use them to skip slow lookups.,Hashing

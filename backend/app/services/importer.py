@@ -6,11 +6,12 @@ from pathlib import Path
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.models import ProblemBank, UserProblem
+from app.models import DailyByte, ProblemBank, UserProblem
 
 DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data"
 BANK_CSV = DATA_DIR / "problem_bank.csv"
 MY_SOLVED_CSV = DATA_DIR / "my_solved.csv"
+BYTES_CSV = DATA_DIR / "daily_bytes.csv"
 MY_SOLVED_COLUMNS = {"slug", "title", "link", "difficulty", "in_bank", "pattern"}
 CUSTOM_PATTERN = "Contest / other"
 
@@ -130,3 +131,29 @@ def import_my_solved(db: Session, user_id: int, reader: csv.DictReader, today: d
 
     db.commit()
     return {"created": created, "skipped": skipped, "custom_created": custom_created, "missing": missing}
+
+
+def import_bytes(db: Session, csv_path: Path = BYTES_CSV) -> dict:
+    """Load daily_bytes.csv. Upsert by (type, title), so running it twice never duplicates."""
+    existing = {(b.type, b.title): b for b in db.scalars(select(DailyByte))}
+    created = updated = 0
+
+    with open(csv_path, encoding="utf-8-sig", newline="") as f:
+        for row in csv.DictReader(f):
+            key = (row["type"].strip(), row["title"].strip())
+            values = {
+                "content": row["content"].rstrip(),
+                "why_it_matters": row["why_it_matters"].strip(),
+                "topic": row["topic"].strip() or None,
+            }
+            byte = existing.get(key)
+            if byte is None:
+                db.add(DailyByte(type=key[0], title=key[1], **values))
+                created += 1
+            else:
+                for field, value in values.items():
+                    setattr(byte, field, value)
+                updated += 1
+
+    db.commit()
+    return {"created": created, "updated": updated}

@@ -59,6 +59,14 @@ docker compose exec backend python -m scripts.import_bank   # with Docker
 python -m scripts.import_bank                               # or from the backend folder
 ```
 
+## Load the Daily Bytes
+
+Loads 30 short code snippets and DSA facts from `backend/data/daily_bytes.csv`. Safe to run again.
+
+```bash
+docker compose exec backend python -m scripts.import_bytes
+```
+
 ## Import your solved problems
 
 Register first, then load `backend/data/my_solved.csv` into your list.
@@ -83,6 +91,7 @@ Or upload the CSV with `POST /my/problems/import` in http://localhost:8000/docs.
 9. Try `GET /suggest?limit=5`. Set `{"target_company": "Amazon"}` in settings and try again.
 10. Try `GET /me/progress` for XP, level, streak and this week.
 11. Try `GET /badges`. A `done` response lists any badge it just unlocked in `new_badges`.
+12. Try `GET /byte/today`, or `GET /byte/today?type=fact`.
 
 ## XP, levels and streak
 

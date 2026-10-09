@@ -174,7 +174,7 @@ def test_solved_it_flow(client, auth_headers, bank, today):
 
     up = client.post("/my/problems", headers=auth_headers, json={"slug": first["slug"]}).json()
     done = client.post(f"/my/problems/{up['id']}/done", headers=auth_headers, json={"section": "new"})
-    assert done.json() == {"xp_earned": 30}
+    assert done.json()["xp_earned"] == 30
 
     # Today: it stays in the new list as done, and another suggestion fills the 2nd slot.
     today_page = client.get("/today", headers=auth_headers).json()

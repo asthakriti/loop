@@ -54,3 +54,8 @@ class DoneIn(BaseModel):
 
 class DoneOut(BaseModel):
     xp_earned: int
+    total_xp: int
+    level: int
+    level_name: str
+    streak: int
+    all_done: bool  # True when every quest of today is cleared

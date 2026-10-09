@@ -71,6 +71,11 @@ def get_today_page(
     user: User = Depends(get_current_user),
     today: date = Depends(get_today),
 ):
+    return build_today_page(db, user, today)
+
+
+def build_today_page(db: Session, user: User, today: date) -> TodayOut:
+    """Warm-up + Loop + New quests for one day. Also used by 'done' to check if the day is cleared."""
     user_settings = get_user_settings(db, user.id)
     plan = build_today(db, user.id, today, user_settings.round_days, user_settings.max_daily)
 

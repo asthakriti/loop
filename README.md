@@ -81,6 +81,13 @@ Or upload the CSV with `POST /my/problems/import` in http://localhost:8000/docs.
 7. Try `GET /today`, then clear a problem with `POST /my/problems/{id}/done` and `{"section": "loop"}`.
 8. Try `PUT /settings` with `{"round_days": 60}` and see `GET /today` give fewer problems per day.
 9. Try `GET /suggest?limit=5`. Set `{"target_company": "Amazon"}` in settings and try again.
+10. Try `GET /me/progress` for XP, level, streak and this week.
+
+## XP, levels and streak
+
+- Clearing a problem gives XP: Warm-up +10, The Loop +15, New quest +30.
+- 10 levels, from Beginner (0 XP) to Interview Ready (2400 XP).
+- Clear **every** quest of the day to grow your streak. Miss a day and it starts again (your best streak is kept).
 
 ## How the round robin works
 

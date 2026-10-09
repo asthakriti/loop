@@ -9,9 +9,10 @@ from sqlalchemy.orm import Session
 from app.core.deps import get_current_user, get_today
 from app.database import get_db
 from app.models import ProblemBank, User, UserProblem
+from app.routers.today import build_today_page
 from app.schemas.my_problem import ImportResult, MyProblemCreate, MyProblemOut, MyProblemUpdate
 from app.schemas.today import DoneIn, DoneOut
-from app.services import queue
+from app.services import queue, xp
 from app.services.importer import get_or_create_custom_problem, import_my_solved, slug_from
 
 router = APIRouter(prefix="/my/problems", tags=["my problems"])
@@ -156,7 +157,21 @@ def mark_done(
         raise HTTPException(status_code=409, detail="Already cleared today")
     except queue.RetiredProblem:
         raise HTTPException(status_code=400, detail="This problem is retired")
-    return DoneOut(xp_earned=revision.xp_earned)
+
+    # Is the whole day cleared now? Then it counts as a streak day.
+    page = build_today_page(db, user, today)
+    all_done = page.total_count > 0 and page.done_count == page.total_count
+
+    stats = xp.award(db, user.id, revision.xp_earned, today, all_done)
+    level = xp.level_for(stats.total_xp)
+    return DoneOut(
+        xp_earned=revision.xp_earned,
+        total_xp=stats.total_xp,
+        level=level.level,
+        level_name=level.name,
+        streak=xp.current_streak(stats, today),
+        all_done=all_done,
+    )
 
 
 @router.post("/{user_problem_id}/retire", response_model=MyProblemOut)

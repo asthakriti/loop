@@ -39,7 +39,7 @@ def test_clear_it_updates_today(client, auth_headers, bank):
 
     response = client.post(f"/my/problems/{first_id}/done", headers=auth_headers, json={"section": "loop"})
     assert response.status_code == 200
-    assert response.json() == {"xp_earned": 15}
+    assert response.json()["xp_earned"] == 15
 
     today = get_today(client, auth_headers)
     assert today["loop"][0]["id"] == first_id

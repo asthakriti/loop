@@ -3,6 +3,7 @@ from app.models.badge import Badge, UserBadge
 from app.models.daily_byte import DailyByte
 from app.models.problem_bank import ProblemBank
 from app.models.revision import Revision
+from app.models.streak_day import StreakDay
 from app.models.user import User
 from app.models.user_problem import UserProblem
 from app.models.user_settings import UserSettings
@@ -13,6 +14,7 @@ __all__ = [
     "DailyByte",
     "ProblemBank",
     "Revision",
+    "StreakDay",
     "User",
     "UserBadge",
     "UserProblem",

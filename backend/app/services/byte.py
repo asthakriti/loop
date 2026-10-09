@@ -19,11 +19,14 @@ def byte_index(today: date, total: int) -> int:
     return (today - START_DATE).days % total
 
 
-def byte_for_today(db: Session, today: date, byte_type: str | None = None) -> DailyByte | None:
+def byte_for_today(
+    db: Session, today: date, byte_type: str | None = None, offset: int = 0
+) -> DailyByte | None:
+    """Today's byte. offset=1 gives the next one in the line (the "Next" button)."""
     query = select(DailyByte).order_by(DailyByte.id)
     if byte_type:
         query = query.where(DailyByte.type == byte_type)
     all_bytes = db.scalars(query).all()
     if not all_bytes:
         return None
-    return all_bytes[byte_index(today, len(all_bytes))]
+    return all_bytes[(byte_index(today, len(all_bytes)) + offset) % len(all_bytes)]

@@ -97,3 +97,16 @@ def test_byte_api_404_when_empty(client, auth_headers):
 
 def test_byte_needs_login(client):
     assert client.get("/byte/today").status_code == 401
+
+
+def test_offset_gives_the_next_byte(db, bytes_loaded):
+    tomorrow = byte_for_today(db, DAY + timedelta(days=1), "code")
+    assert byte_for_today(db, DAY, "code", offset=1).id == tomorrow.id
+    assert byte_for_today(db, DAY, "code", offset=15).id == byte_for_today(db, DAY, "code").id  # wraps around
+
+
+def test_byte_api_offset(client, auth_headers, bytes_loaded):
+    today_byte = client.get("/byte/today", headers=auth_headers).json()
+    next_byte = client.get("/byte/today", headers=auth_headers, params={"offset": 1}).json()
+    assert next_byte["id"] != today_byte["id"]
+    assert client.get("/byte/today", headers=auth_headers, params={"offset": -1}).status_code == 422

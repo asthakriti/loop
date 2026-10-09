@@ -54,6 +54,13 @@
     font-family: var(--font-heading);
   }
 
+  /* Show code exactly as typed: "==" stays two characters, not one joined symbol. */
+  code,
+  pre,
+  .font-mono {
+    font-variant-ligatures: none;
+  }
+
   :focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;

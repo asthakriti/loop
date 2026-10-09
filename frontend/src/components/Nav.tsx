@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { getMe } from '../api/auth'
-import { getProgress } from '../api/progress'
 import { useAuth } from '../auth/AuthContext'
+import { useProgress } from '../state/ProgressContext'
 import { LoopLogo } from './LoopLogo'
 
 export const NAV_LINKS = [
@@ -15,12 +15,11 @@ export const NAV_LINKS = [
 
 export function Nav() {
   const { logout } = useAuth()
-  const [xp, setXp] = useState<number | null>(null)
+  const { progress } = useProgress()
   const [email, setEmail] = useState('')
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    getProgress().then((p) => setXp(p.total_xp)).catch(() => setXp(null))
     getMe().then((u) => setEmail(u.email)).catch(() => setEmail(''))
   }, [])
 
@@ -52,7 +51,7 @@ export function Nav() {
 
         <div className="ml-auto flex items-center gap-3">
           <span className="rounded-full border border-border-strong bg-surface px-3 py-1.5 font-mono text-sm text-lavender">
-            {xp === null ? '…' : `${xp} XP`}
+            {progress ? `${progress.total_xp} XP` : '…'}
           </span>
 
           <div className="relative">

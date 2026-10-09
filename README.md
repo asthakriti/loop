@@ -52,6 +52,8 @@ npm run dev      # http://localhost:5173 (the backend must be running on :8000)
 npm test         # run the frontend tests
 ```
 
+Log in, then the **Today** page shows Warm-up, The Loop and New quests. "Clear it" saves the revision and gives XP.
+
 The API address comes from `VITE_API_URL` (see `frontend/.env.example`).
 The backend only accepts browser calls from the addresses in `CORS_ORIGINS` (default `http://localhost:5173`).
 

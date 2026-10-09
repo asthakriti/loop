@@ -3,6 +3,7 @@ import { Layout } from './components/Layout'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { ComingSoon } from './pages/ComingSoon'
 import { Login } from './pages/Login'
+import { Today } from './pages/Today'
 
 export function App() {
   return (
@@ -12,7 +13,7 @@ export function App() {
       {/* Everything below needs login. */}
       <Route element={<ProtectedRoute />}>
         <Route element={<Layout />}>
-          <Route path="/" element={<ComingSoon title="Today" feature={13} />} />
+          <Route path="/" element={<Today />} />
           <Route path="/problems" element={<ComingSoon title="My problems" feature={14} />} />
           <Route path="/bank" element={<ComingSoon title="Problem bank" feature={14} />} />
           <Route path="/patterns" element={<ComingSoon title="Patterns" feature={15} />} />

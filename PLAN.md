@@ -466,8 +466,14 @@ For **every** feature:
 
 ---
 
+### Feature 17 — LeetCode import (added by the owner after Feature 16)
+- A browser-console script (copied from the My problems page) downloads the user's solved LeetCode problems as `leetcode_solved.csv` (slug, title, link, difficulty).
+- `POST /my/problems/import` and `scripts/import_my_solved.py` accept that file (only `slug` or `link` is required; pattern comes from the bank).
+- CLAUDE.md: when asked to run the app, start it, open it, and walk the user through the LeetCode import.
+- Commit: `feat: import solved problems from LeetCode`
+
 ## 10. Later ideas (not now)
 - Daily email or Telegram reminder with today's quests
-- Auto-sync solved problems from LeetCode
+- Auto-sync solved problems from LeetCode every day (Feature 17 is a manual export + import)
 - Mock test mode with a timer
 - Friends leaderboard

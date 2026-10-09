@@ -19,6 +19,7 @@ It picks the right new problems for you with a priority score, and keeps you goi
 - **XP, levels, streaks and badges.** Warm-up +10, Loop +15, New +30 XP. 10 levels. The streak grows only on days you clear everything.
 - **Daily Byte.** A short Python snippet or a true DSA fact every day.
 - **"In real life" box.** Every problem says where it is used in real apps (Splitwise, Spotify, Google Maps ...).
+- **One-click LeetCode import.** A small script downloads every problem you solved on LeetCode as a CSV; import it on My problems.
 - **Patterns and stats.** 15 core patterns (covered at 3 solved), solved-by-topic bars, round progress, next milestone.
 - **Works on a phone.** One-column layout with a bottom tab bar.
 
@@ -32,7 +33,7 @@ It picks the right new problems for you with a priority score, and keeps you goi
 |---|---|
 | Backend | Python 3.12, FastAPI, SQLAlchemy 2, Alembic, PostgreSQL 16, JWT (python-jose), passlib/bcrypt, Pydantic v2 |
 | Frontend | React 19, Vite, TypeScript, Tailwind CSS v4, React Router |
-| Tests | pytest (177 tests, real Postgres), Vitest + Testing Library (43 tests) |
+| Tests | pytest (180 tests, real Postgres), Vitest + Testing Library (48 tests) |
 | Run / deploy | Docker, docker-compose, Render (API + Postgres), Vercel (frontend) |
 
 ## How the round robin works
@@ -79,7 +80,19 @@ npm run dev          # open http://localhost:5173
 
 - API docs: http://localhost:8000/docs
 - The Docker database is on port **5433** on your machine, so it does not clash with a local Postgres.
-- Register in the app, then use **My problems → Import CSV** with `backend/data/my_solved.csv` (or any CSV with the same columns).
+- Register in the app, then bring in your LeetCode history (next section).
+
+### Import your LeetCode solved list
+
+1. Open [leetcode.com](https://leetcode.com) and log in.
+2. Press `F12` (or `Ctrl+Shift+J`) and open the **Console** tab.
+3. In Loop, go to **My problems → How to get your solved list from LeetCode → Copy script**. Paste it in the console and press Enter.
+   (If Chrome blocks pasting, type `allow pasting`, press Enter, and paste again.)
+4. A file `leetcode_solved.csv` downloads with every problem you solved.
+5. In Loop, click **Import CSV** and pick that file. Problems already in your list are skipped, so you can repeat this any time.
+
+The script only calls LeetCode's own API from your logged-in tab and saves the file on your computer.
+The import also accepts `my_solved.csv`, or any CSV with a `slug` or `link` column.
 
 ### Backend without Docker
 

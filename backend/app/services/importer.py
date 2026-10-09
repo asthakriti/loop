@@ -12,7 +12,7 @@ DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data"
 BANK_CSV = DATA_DIR / "problem_bank.csv"
 MY_SOLVED_CSV = DATA_DIR / "my_solved.csv"
 BYTES_CSV = DATA_DIR / "daily_bytes.csv"
-MY_SOLVED_COLUMNS = {"slug", "title", "link", "difficulty", "in_bank", "pattern"}
+DIFFICULTIES = {"easy": "Easy", "medium": "Medium", "hard": "Hard"}
 CUSTOM_PATTERN = "Contest / other"
 
 # CSV columns that are copied straight into the problem_bank table.
@@ -80,18 +80,27 @@ def get_or_create_custom_problem(
     return problem
 
 
-def import_my_solved(db: Session, user_id: int, reader: csv.DictReader, today: date) -> dict:
-    """Import a list of solved problems (my_solved.csv format) for one user.
+def _cell(row: dict, column: str) -> str:
+    """A cell from the CSV, or "" if the column is not in this file."""
+    return (row.get(column) or "").strip()
 
-    - in_bank = true  -> link to the bank problem with that slug
-    - in_bank = false -> create a custom bank problem first
-    - Imported problems go straight into the round robin line:
-      status = in_queue and last_revised_on = NULL, so they are first in line.
-    - Problems the user already has are skipped.
+
+def import_my_solved(db: Session, user_id: int, reader: csv.DictReader, today: date) -> dict:
+    """Import a list of solved problems for one user.
+
+    Works with two CSV shapes:
+      - my_solved.csv:          slug, title, link, difficulty, in_bank, pattern
+      - leetcode_solved.csv:    slug, title, link, difficulty   (from the LeetCode export script)
+    Only "slug" or "link" is required. For each row:
+      - slug found in the bank      -> link to that bank problem (pattern, real-life, ... come from the bank)
+      - slug not in the bank        -> create a custom problem ("Contest / other")
+      - in_bank = true but missing  -> report it in "missing" (the bank was probably not imported yet)
+    Imported problems go straight into the round robin line (status in_queue, never revised).
+    Problems the user already has are skipped.
     """
-    missing_columns = MY_SOLVED_COLUMNS - set(reader.fieldnames or [])
-    if missing_columns:
-        raise ValueError(f"CSV is missing columns: {', '.join(sorted(missing_columns))}")
+    columns = set(reader.fieldnames or [])
+    if not columns & {"slug", "link"}:
+        raise ValueError("CSV needs a 'slug' or 'link' column (for example: two-sum).")
 
     bank_by_slug = {p.slug: p for p in db.scalars(select(ProblemBank))}
     already_have = set(db.scalars(select(UserProblem.problem_id).where(UserProblem.user_id == user_id)))
@@ -99,16 +108,22 @@ def import_my_solved(db: Session, user_id: int, reader: csv.DictReader, today: d
     missing = []
 
     for row in reader:
-        slug = row["slug"].strip()
+        link, title = _cell(row, "link"), _cell(row, "title")
+        slug = _cell(row, "slug").lower() or (slug_from(link, title) if link else "")
+        if not slug:
+            continue  # empty line
         problem = bank_by_slug.get(slug)
 
         if problem is None:
-            if row["in_bank"].strip().lower() == "true":
-                # Should be in the bank but is not. Usually the bank was not imported yet.
+            if _cell(row, "in_bank").lower() == "true":
                 missing.append(slug)
                 continue
             problem = get_or_create_custom_problem(
-                db, slug, row["title"].strip(), row["link"].strip(), row["difficulty"].strip()
+                db,
+                slug,
+                title or slug.replace("-", " ").title(),
+                link or f"https://leetcode.com/problems/{slug}/",
+                DIFFICULTIES.get(_cell(row, "difficulty").lower(), "Medium"),
             )
             bank_by_slug[slug] = problem
             custom_created += 1

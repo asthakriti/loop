@@ -77,7 +77,7 @@ def test_import_without_bank_reports_missing(client, auth_headers):
 def test_import_bad_csv_is_400(client, auth_headers):
     response = upload(client, auth_headers, b"name,score\nfoo,1\n")
     assert response.status_code == 400
-    assert "missing columns" in response.json()["detail"]
+    assert "'slug' or 'link'" in response.json()["detail"]
 
 
 # ---------- add ----------
@@ -175,3 +175,44 @@ def test_cannot_touch_other_users_problem(client, auth_headers, bank):
     other = other_user_headers(client)
     assert client.put(f"/my/problems/{up_id}", headers=other, json={"notes": "x"}).status_code == 404
     assert client.delete(f"/my/problems/{up_id}", headers=other).status_code == 404
+
+
+# ---------- the LeetCode export format (slug, title, link, difficulty) ----------
+
+LEETCODE_CSV = b"""slug,title,link,difficulty
+two-sum,"Two Sum",https://leetcode.com/problems/two-sum/,Easy
+lru-cache,"LRU Cache",https://leetcode.com/problems/lru-cache/,Medium
+count-the-hidden-sequences,"Count the Hidden Sequences, II",https://leetcode.com/problems/count-the-hidden-sequences/,Medium
+
+"""
+
+
+def test_import_leetcode_export(client, auth_headers, bank, db):
+    result = upload(client, auth_headers, LEETCODE_CSV).json()
+    assert result == {"created": 3, "skipped": 0, "custom_created": 1, "missing": []}
+
+    mine = {p["slug"]: p for p in my_list(client, auth_headers)}
+    # Problems in the bank get the bank's pattern and real-life line.
+    assert mine["lru-cache"]["pattern"] == "Design"
+    assert mine["lru-cache"]["real_life"]
+    # A problem not in the bank becomes a custom one, keeping its title (with a comma) and difficulty.
+    custom = mine["count-the-hidden-sequences"]
+    assert custom["is_custom"] is True
+    assert custom["title"] == "Count the Hidden Sequences, II"
+    assert custom["difficulty"] == "Medium"
+    assert custom["pattern"] == "Contest / other"
+
+
+def test_import_leetcode_export_twice_skips(client, auth_headers, bank):
+    upload(client, auth_headers, LEETCODE_CSV)
+    assert upload(client, auth_headers, LEETCODE_CSV).json()["skipped"] == 3
+
+
+def test_import_links_only(client, auth_headers, bank):
+    csv_text = b"link\nhttps://leetcode.com/problems/two-sum/description/\nhttps://leetcode.com/problems/some-new-one/\n"
+    result = upload(client, auth_headers, csv_text).json()
+    assert result["created"] == 2
+    mine = {p["slug"]: p for p in my_list(client, auth_headers)}
+    assert mine["two-sum"]["is_custom"] is False
+    assert mine["some-new-one"]["title"] == "Some New One"  # made from the slug
+    assert mine["some-new-one"]["difficulty"] == "Medium"  # unknown difficulty -> Medium

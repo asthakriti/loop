@@ -12,6 +12,7 @@ import {
 import { Difficulty, lastSeenText, Pill } from '../components/bits'
 import { FilterBar, SearchInput, SelectFilter, useDebounced } from '../components/Filters'
 import { ExternalIcon } from '../components/icons'
+import { LeetCodeHelp } from '../components/LeetCodeHelp'
 import { ToastList, useToasts } from '../components/Toasts'
 
 const STATUS_LABEL: Record<Status, string> = { new: 'Warm-up next', in_queue: 'In the line', retired: 'Retired' }
@@ -230,6 +231,9 @@ export function MyProblems() {
         </div>
       </div>
 
+      {/* Open by default while the list is empty (first visit). */}
+      <LeetCodeHelp open={problems !== null && problems.length === 0 && !q && !pattern && !status && !difficulty} />
+
       <FilterBar>
         <SearchInput label="Search" value={q} onChange={setQ} />
         <SelectFilter label="Pattern" value={pattern} onChange={setPattern} options={[...PATTERNS, 'Contest / other']} />
@@ -245,8 +249,8 @@ export function MyProblems() {
 
       {problems && problems.length === 0 && !error && (
         <p className="rounded-card border border-border bg-surface p-6 text-muted">
-          No problems here. Import your solved list with the <strong className="text-text">Import CSV</strong> button
-          (same columns as <span className="font-mono">my_solved.csv</span>).
+          No problems here yet. Follow the steps above to download your solved list from LeetCode, then click{' '}
+          <strong className="text-text">Import CSV</strong>.
         </p>
       )}
 

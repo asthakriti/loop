@@ -24,5 +24,24 @@ Read `PLAN.md` first. It has the full plan, data, logic, API, UI design and the 
 - Do not add features that are not in PLAN.md.
 - Do not use the real clock inside logic you test. Pass `today` as a parameter so tests can use fixed dates.
 
+## When someone asks you to run the app
+Do all of these steps yourself, without asking first:
+1. Start the backend: `docker compose up -d` in the repo root. Wait until `http://localhost:8000/health` returns `{"status":"ok"}` (it can take ~20 s; retry). If Docker is not running, ask the user to open Docker Desktop.
+2. Start the frontend: in `frontend/`, run `npm install` only if `node_modules` is missing, then `npm run dev -- --port 5173 --strictPort` in the background. If port 5173 is busy with an old Loop Vite server, stop that one first.
+3. Open http://localhost:5173 in the user's browser.
+4. Then tell the user, in simple steps, how to bring in their LeetCode solved list:
+   - Log in or click **Create account** in the app.
+   - Go to **My problems**. The box "How to get your solved list from LeetCode" has the steps and a **Copy script** button:
+     open leetcode.com (logged in) → F12 → Console → paste the script → Enter (if Chrome blocks pasting, type `allow pasting` first) → `leetcode_solved.csv` downloads.
+   - Click **Import CSV** and choose that file.
+5. Offer to import the file for them. If they give the file path and their account email, run (in Git Bash keep `MSYS_NO_PATHCONV=1`, or `/tmp/...` gets turned into a Windows path):
+   ```
+   MSYS_NO_PATHCONV=1 docker compose cp "<path to leetcode_solved.csv>" backend:/tmp/leetcode_solved.csv
+   MSYS_NO_PATHCONV=1 docker compose exec -T backend python -m scripts.import_my_solved <email> /tmp/leetcode_solved.csv
+   MSYS_NO_PATHCONV=1 docker compose exec -T -u root backend rm -f /tmp/leetcode_solved.csv
+   ```
+   Then tell them to **refresh the page** (a page opened before the import shows old suggestions).
+   Never import into an account unless the user told you which email to use.
+
 ## Writing style for messages to the owner
 Simple English, short sentences, no heavy words.

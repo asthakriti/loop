@@ -17,9 +17,8 @@ services:
       retries: 10
 
   backend:
+    # Same production image as Render. On start it updates the tables and loads the bank and bytes.
     build: ./backend
-    # Update the database tables first, then start the API.
-    command: sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000"
     environment:
       # Inside docker, the database host is the service name "db".
       DATABASE_URL: postgresql+psycopg://loop:loop@db:5432/loop

@@ -1,11 +1,25 @@
+# Production image for the Loop API (used by docker-compose and by Render).
 FROM python:3.12-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1
 
 WORKDIR /app
 
+# Install packages first, so Docker can cache this layer when only the code changes.
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 COPY . .
 
+# Do not run as root.
+RUN useradd --create-home loop && chown -R loop /app
+USER loop
+
 EXPOSE 8000
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+# On every start (all steps are safe to repeat):
+#   1. create / update the tables   2. load the problem bank   3. load the daily bytes
+#   4. start the API on $PORT (Render sets PORT; locally it is 8000)
+CMD ["sh", "-c", "alembic upgrade head && python -m scripts.import_bank && python -m scripts.import_bytes && exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --proxy-headers --forwarded-allow-ips='*'"]

@@ -1,169 +1,166 @@
 # Loop
 
-Loop is a web app that helps freshers prepare for DSA interviews.
+**A DSA interview prep app that makes sure you never forget a problem you solved.**
 
-- **Revise old problems** with a round robin queue, so every solved problem comes back about once every 30 days.
-- **Pick the right new problems** with a priority score (fresher topics, target company, famous lists, design problems, new patterns).
-- **Stay motivated** with XP, levels, streaks, badges and a Daily Byte (a code snippet or DSA fact).
+Loop puts every problem you have solved into a round robin line, so each one comes back about once a month.
+It picks the right new problems for you with a priority score, and keeps you going with XP, levels, streaks and badges.
 
-> Work in progress. Features are built one at a time (see `PLAN.md`).
+**Live app:** _link added after the first deploy_
+
+![Today page](docs/screenshots/today.png)
+
+## Features
+
+- **Round robin revision.** All solved problems wait in one line. Each day you get `ceil(problems / round_days)` from the front. Clear one and it moves to the back. Miss a day and nothing is lost.
+- **Warm-up.** A problem you solved yesterday comes back once the next day, before it joins the line.
+- **Smart new problems.** Every unsolved problem gets a priority score (fresher topic, target company, famous lists, design, pattern gaps). The reasons are shown as tags.
+- **XP, levels, streaks and badges.** Warm-up +10, Loop +15, New +30 XP. 10 levels. The streak grows only on days you clear everything.
+- **Daily Byte.** A short Python snippet or a true DSA fact every day.
+- **"In real life" box.** Every problem says where it is used in real apps (Splitwise, Spotify, Google Maps ...).
+- **Patterns and stats.** 15 core patterns (covered at 3 solved), solved-by-topic bars, round progress, next milestone.
+- **Works on a phone.** One-column layout with a bottom tab bar.
+
+| Patterns | Problem bank | Phone |
+|---|---|---|
+| ![Patterns page](docs/screenshots/patterns.png) | ![Problem bank page](docs/screenshots/bank.png) | ![Today on a phone](docs/screenshots/phone-today.png) |
 
 ## Tech stack
 
-- Backend: Python, FastAPI, PostgreSQL, SQLAlchemy, Alembic, JWT, pytest
-- Frontend: React, Vite, TypeScript, Tailwind CSS
-- Local run: docker-compose
-
-## Run locally
-
-### Option 1: Docker (easiest)
-
-```bash
-docker compose up --build
-```
-
-This starts Postgres, creates the tables (Alembic migration), then starts the API.
-
-Open http://localhost:8000/health. You should see `{"status": "ok"}`.
-API docs are at http://localhost:8000/docs.
-
-The Docker database is on port **5433** on your machine (not 5432), so it does not clash with a Postgres you may have installed locally.
-
-### Option 2: Python on your machine
-
-```bash
-cd backend
-python -m venv venv
-venv\Scripts\activate          # Windows
-# source venv/bin/activate     # Mac / Linux
-pip install -r requirements.txt
-copy .env.example .env         # Windows (use cp on Mac / Linux)
-docker compose up -d db        # start only the database
-alembic upgrade head           # create the tables
-uvicorn app.main:app --reload
-```
-
-### Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev      # http://localhost:5173 (the backend must be running on :8000)
-npm test         # run the frontend tests
-```
-
-Log in, then the **Today** page shows Warm-up, The Loop and New quests. "Clear it" saves the revision and gives XP.
-
-The API address comes from `VITE_API_URL` (see `frontend/.env.example`).
-The backend only accepts browser calls from the addresses in `CORS_ORIGINS` (default `http://localhost:5173`).
-
-### Database migrations
-
-```bash
-alembic upgrade head                              # apply all migrations
-alembic revision --autogenerate -m "what changed" # after editing a model
-```
-
-## Load the problem bank
-
-Loads the 278 problems from `backend/data/problem_bank.csv`. Safe to run again (it updates, never duplicates).
-
-```bash
-docker compose exec backend python -m scripts.import_bank   # with Docker
-python -m scripts.import_bank                               # or from the backend folder
-```
-
-## Load the Daily Bytes
-
-Loads 30 short code snippets and DSA facts from `backend/data/daily_bytes.csv`. Safe to run again.
-
-```bash
-docker compose exec backend python -m scripts.import_bytes
-```
-
-## Import your solved problems
-
-Register first, then load `backend/data/my_solved.csv` into your list.
-Imported problems go straight into the revision line. Problems you already have are skipped.
-
-```bash
-docker compose exec backend python -m scripts.import_my_solved you@example.com
-```
-
-Or upload the CSV with `POST /my/problems/import` in http://localhost:8000/docs.
-
-## Try login
-
-1. Open http://localhost:8000/docs.
-2. `POST /auth/register` with `{"email": "you@example.com", "password": "atleast8chars"}`.
-3. `POST /auth/login` with the same body. Copy the `access_token`.
-4. Click **Authorize** (top right), paste the token, then try `GET /auth/me`.
-5. Try `GET /bank` with filters like `pattern=Design`, `company=Amazon`, `difficulty=Easy`, `q=sum`.
-6. Try `POST /my/problems` with `{"slug": "two-sum"}`, then `GET /my/problems`.
-7. Try `GET /today`, then clear a problem with `POST /my/problems/{id}/done` and `{"section": "loop"}`.
-8. Try `PUT /settings` with `{"round_days": 60}` and see `GET /today` give fewer problems per day.
-9. Try `GET /suggest?limit=5`. Set `{"target_company": "Amazon"}` in settings and try again.
-10. Try `GET /me/progress` for XP, level, streak and this week.
-11. Try `GET /badges`. A `done` response lists any badge it just unlocked in `new_badges`.
-12. Try `GET /byte/today`, or `GET /byte/today?type=fact`.
-13. Try `GET /patterns` (15 patterns, covered at 3 solved) and `GET /stats` (round progress and next milestone).
-
-## XP, levels and streak
-
-- Clearing a problem gives XP: Warm-up +10, The Loop +15, New quest +30.
-- 10 levels, from Beginner (0 XP) to Interview Ready (2400 XP).
-- Clear **every** quest of the day to grow your streak. Miss a day and it starts again (your best streak is kept).
-- 7 badges: Century (100 solved), Double Century (200), Full circle (whole line revised once), Builder (first design problem), Explorer (first Graphs problem), On fire (7-day streak), Unstoppable (30-day streak).
+| Part | Tools |
+|---|---|
+| Backend | Python 3.12, FastAPI, SQLAlchemy 2, Alembic, PostgreSQL 16, JWT (python-jose), passlib/bcrypt, Pydantic v2 |
+| Frontend | React 19, Vite, TypeScript, Tailwind CSS v4, React Router |
+| Tests | pytest (177 tests, real Postgres), Vitest + Testing Library (43 tests) |
+| Run / deploy | Docker, docker-compose, Render (API + Postgres), Vercel (frontend) |
 
 ## How the round robin works
 
-All your solved problems wait in one line, ordered by the date you last revised them
-(never revised first, then oldest). Each day Loop takes `ceil(problems / round_days)` from the front.
-When you clear one, its date becomes today, so it goes to the back of the line.
-With 164 problems and a 30 day round, that is 6 a day, and each problem comes back about once a month.
-Missed a day? Nothing is lost. The line just waits.
+```
+line (oldest revision first):  [A] [B] [C] [D] [E] [F] ...
+today, round = 30 days, 164 problems  ->  ceil(164 / 30) = 6 problems
+clear A  ->  A.last_revised_on = today  ->  A is now at the back of the line
+```
+
+- The line is sorted by `last_revised_on` (never revised first, then oldest), then by id.
+- A problem cleared today stays on today's list (marked done), so no extra problem slides in.
+- If the daily count is more than your daily limit, Loop warns you to make the round longer or retire easy problems.
+- Code: [`backend/app/services/queue.py`](backend/app/services/queue.py)
 
 ## How new problems are picked
-
-Every unsolved problem in the bank gets a score:
 
 | Rule | Points |
 |---|---|
 | Fresher topic (Arrays, Strings, Hashing, Binary Search, Sorting) | +3 |
 | Your target company asks it | +3 |
-| In 2 or more famous lists (Blind 75, NeetCode 150, ...) | +2 |
+| In 2 or more famous lists (Blind 75, NeetCode 150, Striver SDE ...) | +2 |
 | Easy or Medium | +2 |
-| Design problem | +3 |
+| Design problem (build a data structure) | +3 |
 | You solved fewer than 3 in this pattern | +2 |
 | Hard | -2 |
 
-Highest score first (max 15, shown as "Priority X/10"). The reasons are shown as tags.
+Highest score first (max 15, shown as "Priority X/10"). Ties: Easy before Medium before Hard.
+Code: [`backend/app/services/priority.py`](backend/app/services/priority.py)
 
-Set your own long random `JWT_SECRET` in `.env` before deploying.
+## Run locally
 
-## Run tests
+You need Docker, Node.js 20+ and (for running backend tests) Python 3.12+.
 
-Tests need the Docker database running (`docker compose up -d db`).
-They create their own `loop_test` database, so your real data is never touched.
+```bash
+# 1. Backend + database (creates tables, loads the 278-problem bank and the daily bytes)
+docker compose up --build
+
+# 2. Frontend, in a second terminal
+cd frontend
+npm install
+npm run dev          # open http://localhost:5173
+```
+
+- API docs: http://localhost:8000/docs
+- The Docker database is on port **5433** on your machine, so it does not clash with a local Postgres.
+- Register in the app, then use **My problems → Import CSV** with `backend/data/my_solved.csv` (or any CSV with the same columns).
+
+### Backend without Docker
 
 ```bash
 cd backend
-pytest
+python -m venv venv
+venv\Scripts\activate             # Windows   (Mac / Linux: source venv/bin/activate)
+pip install -r requirements-dev.txt
+copy .env.example .env            # Windows   (Mac / Linux: cp)
+docker compose up -d db           # only the database
+alembic upgrade head
+python -m scripts.import_bank
+python -m scripts.import_bytes
+uvicorn app.main:app --reload
 ```
+
+### Tests
+
+```bash
+cd backend && pytest              # needs the database: docker compose up -d db
+cd frontend && npm test
+```
+
+Backend tests use their own `loop_test` database and fixed dates (never the real clock).
+
+## Deploy
+
+**Backend + database on Render** (uses [`render.yaml`](render.yaml)):
+
+1. Render dashboard → **New → Blueprint** → pick this repo → **Apply**. It creates `loop-db` (Postgres) and `loop-api` (Docker).
+2. Render asks for `CORS_ORIGINS`. Put your Vercel address there (step 5), e.g. `https://loop-xyz.vercel.app`. You can fill it in later under the service's **Environment** tab.
+3. Wait for the deploy. `https://<your-api>.onrender.com/health` should show `{"status":"ok"}`.
+
+On every start the API runs the migrations and loads the problem bank and daily bytes (safe to repeat).
+`JWT_SECRET` is generated by Render.
+
+**Frontend on Vercel:**
+
+4. Vercel → **Add New → Project** → import this repo → set **Root Directory** to `frontend`.
+5. Add the environment variable `VITE_API_URL` = your Render API address (no `/` at the end) → **Deploy**.
+6. Put the Vercel address into `CORS_ORIGINS` on Render (step 2) if you have not yet.
+
+Free plan notes: the Render free API sleeps after some time without visits, so the first request can take up to about a minute. Render's free Postgres is time-limited; check Render's current pricing page.
+
+## API
+
+All routes except `/auth/*` and `/health` need `Authorization: Bearer <token>`.
+
+| Method | Path | What it does |
+|---|---|---|
+| POST | `/auth/register`, `/auth/login` | Create an account, get a JWT |
+| GET | `/auth/me` | The logged-in user |
+| GET | `/today` | Warm-up, Loop and New quests for today |
+| POST | `/my/problems/{id}/done` | Clear a problem → XP, level, streak, new badges |
+| POST | `/my/problems/{id}/retire` | Take a problem out of the loop |
+| GET, POST | `/my/problems` | List (filters) or add a solved problem |
+| PUT, DELETE | `/my/problems/{id}` | Edit the 1-line note, or delete |
+| POST | `/my/problems/import` | Upload a solved-list CSV |
+| GET | `/bank`, `/bank/{slug}` | Browse the 278 problems (filters, `sort=priority`) |
+| GET | `/suggest` | Top new problems with score and reasons |
+| GET | `/me/progress`, `/badges` | XP, level, streak, week, round; badges |
+| GET | `/patterns`, `/stats` | Pattern checklist; stats and milestones |
+| GET | `/byte/today` | Daily Byte (`type=code\|fact`, `offset` for "Next") |
+| GET, PUT | `/settings` | Round days, daily limit, new per day, target company |
 
 ## Project structure
 
 ```
 backend/
-  app/        FastAPI app (routers, models, schemas, services, core)
-  data/       problem_bank.csv, my_solved.csv
-  scripts/    CSV import scripts
-  alembic/    database migrations
-  tests/      pytest tests
+  app/
+    routers/    one file per API area
+    services/   queue.py (round robin), priority.py, xp.py, badges.py, byte.py, importer.py
+    models/     SQLAlchemy tables      schemas/  Pydantic models      core/  JWT + auth
+  alembic/      migrations
+  data/         problem_bank.csv (278), my_solved.csv, daily_bytes.csv (30)
+  scripts/      CSV import commands
+  tests/        pytest
 frontend/
-  src/api/         fetch client (adds the JWT token) + one file per resource
-  src/auth/        login state (AuthContext)
-  src/components/  Nav, Layout, ProtectedRoute, ...
-  src/pages/       Login, Today, ...
-  src/theme/       colors and fonts (Tailwind v4 @theme)
+  src/api/        fetch client (adds the JWT) + one file per resource
+  src/pages/      Login, Today, MyProblems, Bank, Patterns, Settings
+  src/components/ Nav, BottomTabs, quest rows, cards, Daily Byte ...
+  src/theme/      colours and fonts (Tailwind v4 @theme)
+render.yaml       Render blueprint (API + Postgres)
 ```
+
+Company tags in the problem bank are estimates, not official data.

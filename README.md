@@ -50,6 +50,15 @@ alembic upgrade head                              # apply all migrations
 alembic revision --autogenerate -m "what changed" # after editing a model
 ```
 
+## Try login
+
+1. Open http://localhost:8000/docs.
+2. `POST /auth/register` with `{"email": "you@example.com", "password": "atleast8chars"}`.
+3. `POST /auth/login` with the same body. Copy the `access_token`.
+4. Click **Authorize** (top right), paste the token, then try `GET /auth/me`.
+
+Set your own long random `JWT_SECRET` in `.env` before deploying.
+
 ## Run tests
 
 Tests need the Docker database running (`docker compose up -d db`).

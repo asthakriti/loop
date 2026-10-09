@@ -56,3 +56,16 @@ def db(engine):
     session.close()
     transaction.rollback()
     connection.close()
+
+
+@pytest.fixture
+def client(db):
+    """API test client that uses the test database session."""
+    from fastapi.testclient import TestClient
+
+    from app.database import get_db
+    from app.main import app
+
+    app.dependency_overrides[get_db] = lambda: db
+    yield TestClient(app)
+    app.dependency_overrides.clear()

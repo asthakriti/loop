@@ -1,6 +1,10 @@
 from fastapi import FastAPI
 
+from app.routers import auth
+
 app = FastAPI(title="Loop", description="DSA prep app with round robin revision")
+
+app.include_router(auth.router)
 
 
 @app.get("/health")

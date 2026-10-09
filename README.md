@@ -5,7 +5,9 @@
 Loop puts every problem you have solved into a round robin line, so each one comes back about once a month.
 It picks the right new problems for you with a priority score, and keeps you going with XP, levels, streaks and badges.
 
-**Live app:** _link added after the first deploy_
+**Live app:** https://loop-navy-psi.vercel.app · **API docs:** https://loop-api-lu7o.onrender.com/docs
+
+> The API runs on Render's free plan and sleeps when nobody uses it, so the first load can take up to a minute.
 
 ![Today page](docs/screenshots/today.png)
 
